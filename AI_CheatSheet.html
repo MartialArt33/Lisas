@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>AI Cheat Sheet</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<!--
+    Version History
+    11-24-2026 Add Skills link to AI_Skills.html.
+    11-24-2026 Add Home link to index.html.
+    11-24-2026 Replace the remaining Dimpy references with AI.
+    11-24-2026 Remove Reference Desk, Skills, and Behavior Guide links so the page stands alone with AI_Modes.html.
+    11-24-2026 Point the Seeds link to AI_Modes.html and relabel it Modes.
+    11-24-2026 Rename to AI_CheatSheet.html, remove version from filename and title, and trim version history before 11-24-2026.
+    11-24-2026 v9.4.3 Replace the City logo tab icon with an inline wrench icon.
+    11-24-2026 v9.4.2 Make the header description AI-neutral, remove the footer logo, and add manuscript-editing cards.
+    11-24-2026 v9.4.1 Remove the empty Cleanup topic filter after the manuscript-focused card cleanup.
+    11-24-2026 v9.4.0 Save as Claude_CheatSheet_v9.4.0.html, add version to title, and update file references and footer.
+    11-24-2026 v9.3.7 Remove the empty Memory topic filter, fix the noscript page filename, and drop ChatGPT from author lines.
+    History filename: AI_CheatSheet.html
+  -->
+<!--
+    Save Location
+    Save this file to:
+    "./AI_CheatSheet.html"
+
+    Folder Notes
+    - Change window.CHEATSHEET_ROOT to move this file and its related files to a different library or folder.
+    - This page uses external files so the HTML stays focused on layout and behavior.
+    - cards-data.js stores the card data used to render the main card deck.
+    - Keep the HTML file and cards-data.js together under window.CHEATSHEET_ROOT.
+    - Update this page using skill [shared_skill_name], then save the returned HTML and matching cards-data.js back to the same folder.
+  -->
+<script>
+    /*
+      03-25-2026
+      Author: Art Malin
+      Root folder settings for the AI help pages.
+      Update CHEATSHEET_ROOT once if the folder moves.
+    */
+    window.CHEATSHEET_ROOT = "./";
+window.CHEATSHEET_FILE_URL = window.CHEATSHEET_ROOT + "AI_CheatSheet.html";
+window.HOME_URL = window.CHEATSHEET_ROOT + "index.html";
+window.CHEATSHEET_URL = window.CHEATSHEET_ROOT + "AI_CheatSheet.html";
+window.SEEDS_URL = window.CHEATSHEET_ROOT + "AI_Modes.html";
+window.SKILLS_URL = window.CHEATSHEET_ROOT + "AI_Skills.html";
+window.CARDS_DATA_URL = window.CHEATSHEET_ROOT + "cards-data.js";
+  </script>
+<style>
+    :root {
+      --bg: #fdfefe;
+      --card: #ffffff;
+      --border: #e2e6ea;
+      --text: #1f1f1f;
+      --muted: #666;
+      --accent: #0078d4;
+      --font: "Segoe UI", Tahoma, Arial, sans-serif;
+      --mono: ui-monospace, Consolas, Menlo, monospace;
+      --fs: 11.5px;
+      --pad: 10px;
+      --gap: 10px;
+      --radius: 8px;
+      --shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      --narrow: "Arial Narrow", "Bahnschrift SemiCondensed", "Segoe UI Semibold", "Segoe UI", Tahoma, Arial, sans-serif;
+      --feature-blue: #1f6fd6;
+      --feature-green: #2f8f83;
+      --feature-slate: #a67d44;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      font-family: var(--font);
+      font-size: var(--fs);
+      color: var(--text);
+      line-height: 1.25;
+      overflow: auto;
+    }
+
+    html, body {
+      min-height: 100%;
+    }
+
+    .wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 12px 24px;
+    }
+
+    .sticky-shell {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--bg);
+      padding-top: 8px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(8, 58, 110, 0.22);
+      box-shadow: 0 8px 14px rgba(8, 58, 110, 0.08);
+    }
+
+    .topbar {
+      justify-content: space-between;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 10px;
+      background: radial-gradient(900px 220px at 20% 0%, rgba(255, 255, 255, .16), rgba(255, 255, 255, 0) 60%), linear-gradient(180deg, #0c5fb0 0%, #083a6e 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, .18);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, .25);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 10px;
+    }
+
+    .topbar-left,
+    .header-leftwrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-left: auto;
+    }
+
+    .header-leftwrap {
+      gap: 14px;
+    }
+
+    .header-logo {
+      height: 34px;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .35));
+    }
+
+    .header-titlewrap {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .header-title {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+      letter-spacing: .2px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+    }
+
+    .header-desc {
+      margin-top: 2px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, .86);
+      font-weight: 500;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, .25);
+    }
+
+    .topbar-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .topbtn,
+    .feature-btn {
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-family: var(--narrow);
+      font-size: 11.5px;
+      line-height: 1.25;
+      font-weight: 500;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #0b4f93;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, .25);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, .35) inset, 0 -1px 0 rgba(0, 0, 0, .25) inset, 0 2px 0 rgba(0, 0, 0, .35), 0 6px 12px rgba(0, 0, 0, .2);
+    }
+
+    .topbtn:hover,
+    .feature-btn:hover {
+      filter: brightness(1.08);
+      border-color: rgba(255, 255, 255, .45);
+    }
+
+    .topbtn:active,
+    .feature-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, .25) inset, 0 -1px 0 rgba(0, 0, 0, .25) inset, 0 2px 0 rgba(0, 0, 0, .30);
+    }
+
+    .topbtn:focus-visible,
+    .feature-btn:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, .85);
+      outline-offset: 2px;
+    }
+
+    .helpbtn summary,
+    summary {
+      list-style: none;
+    }
+
+    .helpbtn summary::-webkit-details-marker,
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    .tier-row {
+      display: flex;
+      width: 100%;
+      margin: 0;
+      align-items: stretch;
+    }
+
+    .tier-row:not(.is-open) .quick-guide-grid {
+      display: none;
+    }
+
+    .tier-row .helpcontent {
+      background: var(--card) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: var(--radius) !important;
+      box-shadow: var(--shadow) !important;
+      color: var(--text) !important;
+    }
+
+    .quick-guide-shell {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .quick-guide-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr);
+      gap: 12px;
+      align-items: start;
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 10px;
+    }
+
+    .quick-guide-instructions {
+      min-width: 0;
+      padding: 10px;
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
+
+    .quick-guide-instructions.more.helpcontent,
+    .more.helpcontent.quick-guide-instructions {
+      box-shadow: none !important;
+      border: none !important;
+      background: transparent !important;
+    }
+
+    .quick-guide-instructions ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .quick-guide-instructions li + li {
+      margin-top: 4px;
+    }
+
+    .quick-guide-tip-panel {
+      min-width: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .quick-guide-instructions .more,
+    .quick-guide-tip-panel .more {
+      box-shadow: none !important;
+    }
+
+    .tier-sample-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 0;
+    }
+
+    .tier-row .tier-sample {
+      flex: 0 0 auto;
+      width: auto;
+      max-width: none;
+      margin: 0;
+      min-height: 0;
+      padding: 6px 8px;
+    }
+
+    .tier-row .tier-sample .card-title {
+      font-size: 11.5px;
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: visible;
+      text-overflow: clip;
+    }
+
+    .columns {
+      column-count: 3;
+      column-gap: var(--gap);
+    }
+
+    @media (max-width: 1100px) {
+      .columns {
+        column-count: 2;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .columns {
+        column-count: 1;
+      }
+    }
+
+    .card {
+      display: inline-block;
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--pad);
+      margin: 0 0 var(--gap) 0;
+      box-shadow: var(--shadow);
+      break-inside: avoid;
+      transition: box-shadow 0.2s ease, outline-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .card:hover {
+      outline: 2px solid var(--accent);
+    }
+
+    .card.is-featured {
+      outline: 3px solid var(--accent);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.88), 0 0 0 6px rgba(31, 111, 214, 0.18), 0 12px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .card.is-pulsing {
+      animation: featureBorderFlash 0.24s ease-in-out 2;
+    }
+
+    @keyframes featureBorderFlash {
+      0% {
+        outline-color: transparent;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.88), 0 0 0 6px rgba(31, 111, 214, 0.10), 0 12px 28px rgba(0, 0, 0, 0.18);
+      }
+      50% {
+        outline-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.96), 0 0 0 8px rgba(31, 111, 214, 0.36), 0 12px 28px rgba(0, 0, 0, 0.18);
+      }
+      100% {
+        outline-color: transparent;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.88), 0 0 0 6px rgba(31, 111, 214, 0.18), 0 12px 28px rgba(0, 0, 0, 0.18);
+      }
+    }
+
+    ul.paste {
+      margin: 0;
+      padding: 6px 8px;
+      background: #fde8e6;
+      border-radius: 4px;
+      list-style: none;
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+    ul.paste li {
+      list-style: none;
+      margin: 0 0 4px 0;
+      padding: 0 0 0 16px;
+      text-indent: -16px;
+      font-family: var(--narrow);
+      font-size: 11.5px;
+      line-height: 1.25;
+      color: #aa4a4a;
+      white-space: normal;
+    }
+
+    ul.card-list {
+      margin: 0;
+      padding-left: 18px;
+      background: transparent;
+      list-style: disc;
+      margin-left: 0;
+    }
+
+    ul.card-list li {
+      list-style: disc;
+      margin: 0 0 4px 0;
+      padding: 0;
+      text-indent: 0;
+      font-family: var(--font);
+      font-size: 11.5px;
+      line-height: 1.25;
+      color: var(--text);
+      white-space: normal;
+    }
+
+    .card.tier-1 {
+      border-left: 2px solid #1f6fd6;
+      background: #eef5ff;
+      --accent: #1f6fd6;
+    }
+
+    .card.tier-1 .card-title {
+      color: #1f6fd6;
+    }
+
+    .card.tier-2 {
+      border-left: 2px solid #2f8f83;
+      background: #eef9f7;
+      --accent: #2f8f83;
+    }
+
+    .card.tier-2 .card-title {
+      color: #2f8f83;
+    }
+
+    .card.tier-3 {
+      border-left: 2px solid #a67d44;
+      background: #fbf4eb;
+      --accent: #a67d44;
+    }
+
+    .card.tier-3 .card-title {
+      color: #a67d44;
+    }
+
+    .card-head summary {
+      display: flex;
+      align-items: center;
+      line-height: 1.1;
+    }
+
+    .card-title {
+      font-size: 13px;
+      margin: 0;
+      font-weight: 600;
+      max-width: 100%;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1 1 auto;
+      text-align: left;
+    }
+
+    .favorite-marker {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      margin-right: -8px;
+      color: #f59e0b;
+      transform: translateX(-10px);
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .help-toggle {
+      margin-left: auto;
+      cursor: pointer;
+      color: #0078D4;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .help-panel[hidden] {
+      display: none;
+    }
+
+    .help-panel {
+      margin-top: 6px;
+    }
+
+    .or-item {
+      margin-top: 6px;
+      position: relative;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      font-size: 12px;
+      line-height: 1;
+      padding: 4px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: var(--mono);
+      opacity: .6;
+    }
+
+    .copy-btn:hover {
+      opacity: 1;
+    }
+
+    .copy-btn.copied {
+      color: #2f8f83;
+    }
+
+    .has-tooltip {
+      cursor: help;
+    }
+
+    .directive-chip-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 0 0 8px 0;
+    }
+
+    .directive-chip {
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      background: #f4f6f8;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 11px;
+      line-height: 1.15;
+      color: var(--text);
+    }
+
+    .directive-chip.active {
+      border-color: var(--accent);
+      background: #ffffff;
+      font-weight: 600;
+    }
+
+    .directive-topic-block + .directive-topic-block {
+      margin-top: 8px;
+    }
+
+    .directive-topic-label {
+      margin: 0 0 4px 0;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .filtered-directives ul.paste li + li {
+      border-top: 1px solid rgba(0, 0, 0, 0.16);
+      padding-top: 4px;
+      margin-top: 4px;
+    }
+
+    #cardSearch {
+      color: var(--text);
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 6px 8px;
+      width: 180px;
+      font-family: var(--narrow);
+      font-size: 11.5px;
+      line-height: 1.25;
+      font-weight: 500;
+      margin: auto;
+    }
+
+    #filterSelect {
+      margin-left: 8px;
+      padding: 4px 8px;
+      font-size: 11px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--text);
+    }
+
+    .search-hit {
+      background: #fff59d;
+      color: #000;
+      padding: 0 1px;
+      border-radius: 2px;
+    }
+
+    .noscript-notice {
+      margin-top: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      background: red;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 8px;
+      color: #fff4f4;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    }
+
+    .noscript-notice a {
+      color: #ffffff;
+      font-weight: 800;
+      text-decoration: underline;
+    }
+
+    .noscript-notice a:hover {
+      color: #ffe9e6;
+    }
+
+    html.js .nojs-only {
+      display: none;
+    }
+
+    html.js .js-only {
+      display: block;
+    }
+
+    .cheatsheet-topbar {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    .cheatsheet-topbar .topbar-main {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+    }
+
+    .topbar-links {
+      width: 100%;
+      font-size: 12px;
+      color: rgba(255, 255, 255, .92);
+      line-height: 1.2;
+    }
+
+    .topbar-links a {
+      color: rgba(255, 255, 255, .96);
+      text-decoration: none;
+    }
+
+    .topbar-links a:hover,
+    .topbar-links a:focus {
+      text-decoration: underline;
+    }
+
+    .topbar-links .sep {
+      color: rgba(255, 255, 255, .70);
+      padding: 0 6px;
+    }
+
+    .page-scroll {
+      padding-top: 10px;
+      padding-bottom: 112px;
+    }
+
+    
+
+    .feature-shell {
+      width: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: none;
+      border: none;
+      background: transparent;
+    }
+
+    .feature-shell.tier-1 {
+      border-left: 6px solid var(--feature-blue);
+      background: #eef5ff;
+    }
+
+    .feature-shell.tier-2 {
+      border-left: 6px solid var(--feature-green);
+      background: #eef9f7;
+    }
+
+    .feature-shell.tier-3 {
+      border-left: 6px solid var(--feature-slate);
+      background: #fbf4eb;
+    }
+
+    .feature-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 10px 12px;
+      align-items: start;
+    }
+
+    .feature-inner-inline {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .quick-tip-header {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: start;
+      min-width: 0;
+    }
+
+    .feature-meta {
+      min-width: 0;
+    }
+
+    .quick-tip-header .feature-mode {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      text-transform: none;
+      border-radius: 999px;
+      padding: 4px 8px;
+      color: #fff;
+      opacity: 1;
+      transform: none;
+      filter: none;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .quick-tip-meta {
+      min-width: 0;
+    }
+
+    .feature-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+
+    .feature-shell.tier-1 .feature-kicker,
+    .feature-shell.tier-1 .feature-mode {
+      background: var(--feature-blue);
+    }
+
+    .feature-shell.tier-2 .feature-kicker,
+    .feature-shell.tier-2 .feature-mode {
+      background: var(--feature-green);
+    }
+
+    .feature-shell.tier-3 .feature-kicker,
+    .feature-shell.tier-3 .feature-mode {
+      background: var(--feature-slate);
+    }
+
+    .feature-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text);
+      min-width: 0;
+    }
+
+    .feature-copy {
+      font-size: 12px;
+      line-height: 1.35;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .feature-actions {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+    }
+
+    .feature-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .feature-body {
+      min-width: 0;
+    }
+
+    .feature-btn {
+      background: #184f8f;
+      color: #fff;
+      border-color: rgba(255, 255, 255, .18);
+      box-shadow: none;
+      height: 28px;
+      padding: 5px 9px;
+      font-size: 11px;
+    }
+
+    .feature-dismiss {
+      min-width: 30px;
+      width: 30px;
+      padding: 0;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    @media (max-width: 1100px) {
+      .quick-guide-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .quick-tip-header {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+
+      .feature-actions {
+        justify-content: flex-start;
+      }
+
+      .page-scroll {
+        padding-bottom: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+<div class="sticky-shell">
+<div class="topbar cheatsheet-topbar">
+<div class="topbar-main">
+<div class="topbar-left">
+<div class="header-leftwrap">
+<div class="header-titlewrap">
+<div class="header-title">AI Cheat Sheet</div>
+<div class="header-desc">Reusable snippets for changing AI behavior and output.</div>
+</div>
+</div>
+</div>
+<div class="topbar-right">
+<input id="cardSearch" placeholder="Search cards..." type="search"/>
+<select class="topbtn" id="filterSelect">
+<option disabled="" selected="" value="">Filter by topic</option>
+<option value="all">All</option>
+<option value="favorites">Favorites</option>
+<option value="behavior">Behavior</option>
+<option value="instructions">Instructions</option>
+<option value="programming/html">Programming/html</option>
+<option value="quick-switches">Quick Switches</option>
+<option value="review">Review</option>
+<option value="risk">Risk</option>
+<option value="scope">Scope</option>
+<option value="writing">Writing</option>
+</select>
+<div class="topbar-controls">
+<button class="topbtn" id="toggleAll">Show All</button>
+<button class="topbtn" id="howToUseBtn">Quick guide</button>
+<details class="helpbtn">
+<summary class="sr-only">Quick guide</summary>
+</details>
+</div>
+</div>
+<div class="topbar-links">
+<a href="#" id="navHome" target="_top" title="Start here: what each page is for and how to use it">Home</a>
+<span class="sep">|</span>
+<a href="#" id="navCheat" target="_top" title="Quick snippets to accomplish specific actions">Cheat Sheet</a>
+<span class="sep">|</span>
+<a href="#" id="navSeeds" target="_top" title="Bundled directive blocks you can paste at the start of a chat or any time the task changes">Modes</a>
+<span class="sep">|</span>
+<a href="#" id="navSkills" target="_top" title="Sample skill entries and what skills are for">Skills</a>
+</div>
+</div>
+</div>
+<div class="tier-row">
+<div class="quick-guide-shell">
+<div class="quick-guide-grid">
+<div class="more helpcontent quick-guide-instructions">
+<ul>
+<li>This is a reference tool, not a step-by-step tutorial.</li>
+<li>Click a card title to see the prompts.</li>
+<li>Copy and paste into your AI chat to change behavior.</li>
+<li>Click the … for more info.</li>
+<li>Use one card at a time unless you have a reason to combine them.</li>
+</ul>
+</div>
+<div class="quick-guide-tip-panel">
+<div class="feature-shell tier-1" id="featureShell">
+<div class="feature-inner feature-inner-inline">
+<div class="quick-tip-header">
+<div class="feature-mode mode-behavior is-active" id="featureKicker">Behavior</div>
+<h2 class="feature-title" id="featureTitle">Featured card</h2>
+<div class="feature-actions quick-tip-actions">
+<button class="feature-btn" id="featureNext" type="button">Next Tip</button>
+</div>
+</div>
+<div class="feature-meta quick-tip-meta">
+<p class="feature-copy" id="featureCopy">A quick way to get familiar with the cards as you use the page.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tier-sample-row">
+<article class="card tier-1 tier-sample">
+<div class="card-title has-tooltip" title="Sets the AI’s behavior and tone.">Behavior (How it acts)</div>
+</article>
+<article class="card tier-2 tier-sample">
+<div class="card-title has-tooltip" title="Shapes what you get back.">Output (What you get)</div>
+</article>
+<article class="card tier-3 tier-sample">
+<div class="card-title has-tooltip" title="Guides the AI before answering.">Thinking (How it reasons)</div>
+</article>
+</div>
+</div>
+</div>
+</div>
+<noscript>
+<div class="noscript-notice">
+        SharePoint is being wonderfully helpful again. JavaScript is required for this page to work, so if this page
+        looks broken or empty, copy this URL and open it
+        in a new browser tab:
+        <p style="margin:10px 0 0 0; font-family:Consolas, monospace; font-size:14px; font-weight:700; word-break:break-word;">
+          ./AI_CheatSheet.html
+        </p>
+</div>
+</noscript>
+<div class="page-scroll">
+<section class="columns" id="mainCardDeck"></section>
+</div>
+<footer class="topbar">
+<div class="topbar-left">
+<div class="header-leftwrap">
+<div class="header-desc">11-24-2026 Art Malin - renamed to AI Cheat Sheet.</div>
+</div>
+</div>
+<div class="topbar-right">
+<div class="header-desc">AI_CheatSheet.html</div>
+</div>
+</footer>
+</div>
+<script>
+    /*
+      03-31-2026
+      Author: Art Malin
+      Wire the top navigation links from the configured page URLs.
+    */
+    document.addEventListener("DOMContentLoaded", function () {
+      var map = {
+        navHome: window.HOME_URL,
+        navCheat: window.CHEATSHEET_URL,
+        navSeeds: window.SEEDS_URL,
+        navSkills: window.SKILLS_URL,
+      };
+      Object.keys(map).forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.href = map[id];
+      });
+    });
+  </script>
+<script>
+    /*
+      03-20-2026
+      Author: Art Malin
+      Load external cards data from the configured Cheat Sheet root folder
+      and wait for it before rendering the card deck.
+    */
+    window.cardsDataReady = new Promise(function (resolve, reject) {
+      var script = document.createElement("script");
+      script.src = window.CARDS_DATA_URL;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  </script>
+<script>
+    /*
+      04-23-2026
+      Author: Art Malin
+      Render the card deck, wire page interactions, support topic-filtered one-liners,
+      and show the Quick Tip inline inside a flattened Quick Guide panel.
+    */
+    document.documentElement.classList.add("js");
+
+    function escapeHtml(value) {
+      return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function getCardSearchText(card) {
+      var parts = [card.title || "", card.tooltip || ""];
+      (card.directives || []).forEach(function (line) { parts.push(line); });
+      (card.help || []).forEach(function (line) { parts.push(line); });
+      (card.directiveItems || []).forEach(function (item) {
+        parts.push(item.topic || "");
+        parts.push(item.text || "");
+      });
+      return parts.join(" ").toLowerCase();
+    }
+
+    function getDirectiveTopics(card) {
+      var seen = {};
+      var ordered = [];
+      (card.directiveItems || []).forEach(function (item) {
+        var topic = item.topic || "";
+        if (!topic || seen[topic]) return;
+        seen[topic] = true;
+        ordered.push(topic);
+      });
+      return ordered;
+    }
+
+    function getDirectiveItemsForTopic(card, topic) {
+      var items = (card.directiveItems || []).slice();
+      if (topic && topic !== "All") {
+        items = items.filter(function (item) { return item.topic === topic; });
+      }
+      return items.sort(function (a, b) {
+        return (a.sortOrder || 9999) - (b.sortOrder || 9999);
+      });
+    }
+
+    function renderTopicFilteredGroups(card, activeTopic) {
+      var topics = getDirectiveTopics(card);
+      var selected = activeTopic || "All";
+
+      if (selected !== "All") {
+        var items = getDirectiveItemsForTopic(card, selected).map(function (item) {
+          return "<li>" + escapeHtml(item.text) + "</li>";
+        }).join("");
+        return '<div class="directive-topic-block"><div class="directive-topic-label">' + escapeHtml(selected) + '</div><ul class="paste">' + items + "</ul></div>";
+      }
+
+      return topics.map(function (topic) {
+        var items = getDirectiveItemsForTopic(card, topic).map(function (item) {
+          return "<li>" + escapeHtml(item.text) + "</li>";
+        }).join("");
+        return '<div class="directive-topic-block"><div class="directive-topic-label">' + escapeHtml(topic) + '</div><ul class="paste">' + items + "</ul></div>";
+      }).join("");
+    }
+
+    function renderTopicFilteredDirectiveList(card) {
+      var cardKey = escapeHtml(card.id || card.title);
+      var chips = ['<button class="directive-chip active" data-card-id="' + cardKey + '" data-topic="All" type="button">All</button>']
+        .concat(getDirectiveTopics(card).map(function (topic) {
+          return '<button class="directive-chip" data-card-id="' + cardKey + '" data-topic="' + escapeHtml(topic) + '" type="button">' + escapeHtml(topic) + "</button>";
+        })).join("");
+
+      return (
+        '<div class="or-item filtered-directives" data-filtered-directives="1" data-card-id="' + cardKey + '">' +
+          '<div class="directive-chip-row">' + chips + "</div>" +
+          '<div class="copy-source directive-topic-content">' + renderTopicFilteredGroups(card, "All") + "</div>" +
+        "</div>"
+      );
+    }
+
+    function renderDirectiveList(card) {
+      if (card.directiveDisplay === "topic-filtered") {
+        return renderTopicFilteredDirectiveList(card);
+      }
+      var items = (card.directives || []).map(function (line) {
+        return "<li>" + escapeHtml(line) + "</li>";
+      }).join("");
+      var listClass = card.directivesType === "list" ? "card-list" : "paste";
+      return '<div class="or-item"><div class="copy-source"><ul class="' + listClass + '">' + items + "</ul></div></div>";
+    }
+
+    function renderHelpPanel(card) {
+      var items = (card.help || []).map(function (line) {
+        return "<li>" + escapeHtml(line) + "</li>";
+      }).join("");
+      return '<div class="help-panel" hidden=""><ul>' + items + "</ul></div>";
+    }
+
+    function renderStandardCard(card) {
+      var titleAttr = escapeHtml(card.title + ". " + card.tooltip);
+      var tooltip = escapeHtml(card.tooltip);
+      var cardKey = escapeHtml(card.id || card.title);
+      var isFavorite = (card.topics || []).indexOf("favorites") !== -1;
+      var favoriteMarker = isFavorite ? '<span class="favorite-marker" title="Favorite" aria-label="Favorite">🎗</span>' : "";
+      return (
+        '<article class="card tier-' + card.tier + '" data-card-id="' + cardKey + '" data-topics="' + (card.topics || []).join(" ") + '" data-search-text="' + escapeHtml(getCardSearchText(card)) + '">' +
+        '<details class="card-head">' +
+        "<summary>" +
+        favoriteMarker +
+        '<span aria-label="' + titleAttr + '" class="card-title has-tooltip" title="' + tooltip + '">' + escapeHtml(card.title) + "</span>" +
+        '<span aria-label="Help" class="help-toggle" role="button" title="Help">…</span>' +
+        "</summary>" +
+        renderDirectiveList(card) +
+        "</details>" +
+        renderHelpPanel(card) +
+        "</article>"
+      );
+    }
+
+    function renderMainCardDeck() {
+      var container = document.getElementById("mainCardDeck");
+      container.innerHTML = (window.MAIN_CARD_DATA || []).map(renderStandardCard).join("\n");
+    }
+
+    function injectCopyButtons() {
+      document.querySelectorAll(".or-item").forEach(function (scope) {
+        if (scope.querySelector(".copy-btn")) return;
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "copy-btn";
+        btn.title = "Copy directives";
+        btn.textContent = "⧉";
+        scope.appendChild(btn);
+      });
+    }
+
+    function copyDirectiveScope(scope) {
+      var lines = Array.from(scope.querySelectorAll(".copy-source li")).map(function (li) {
+        return li.innerText.trim();
+      }).filter(Boolean).join("\n") + "\n";
+      navigator.clipboard.writeText(lines);
+    }
+
+    function clearSearchHighlights(card) {
+      card.querySelectorAll(".search-hit").forEach(function (hit) {
+        var parent = hit.parentNode;
+        hit.replaceWith(document.createTextNode(hit.textContent));
+        if (parent) parent.normalize();
+      });
+    }
+
+    function highlightSearchTerm(card, term) {
+      if (!term) return;
+      var walker = document.createTreeWalker(card, NodeFilter.SHOW_TEXT, null, false);
+      var nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(function (node) {
+        var parent = node.parentElement;
+        if (!parent || parent.closest(".copy-btn, script, style")) return;
+        var text = node.nodeValue;
+        var lower = text.toLowerCase();
+        var idx = lower.indexOf(term);
+        if (idx === -1) return;
+        var frag = document.createDocumentFragment();
+        var start = 0;
+        while (idx !== -1) {
+          if (idx > start) frag.appendChild(document.createTextNode(text.slice(start, idx)));
+          var span = document.createElement("span");
+          span.className = "search-hit";
+          span.textContent = text.slice(idx, idx + term.length);
+          frag.appendChild(span);
+          start = idx + term.length;
+          idx = lower.indexOf(term, start);
+        }
+        if (start < text.length) frag.appendChild(document.createTextNode(text.slice(start)));
+        node.parentNode.replaceChild(frag, node);
+      });
+    }
+
+    function elementMatches(element, term) {
+      return !!element && element.textContent.toLowerCase().indexOf(term) !== -1;
+    }
+
+    function getCardData(cardId) {
+      return (window.MAIN_CARD_DATA || []).find(function (card) {
+        return (card.id || card.title) === cardId;
+      }) || null;
+    }
+
+    function getModeLabel(tier) {
+      if (tier === 1) return "Behavior";
+      if (tier === 2) return "Output";
+      return "Thinking";
+    }
+
+    function getFeatureDescription(card) {
+      var tooltip = (card.tooltip || "").trim();
+      var helpLine = Array.isArray(card.help) && card.help.length ? String(card.help[0]).trim() : "";
+      if (tooltip && helpLine && tooltip.toLowerCase() !== helpLine.toLowerCase()) {
+        return tooltip + " " + helpLine;
+      }
+      return tooltip || helpLine || "A useful card to try on your next prompt.";
+    }
+
+    function getStickyHeaderOffset() {
+      var stickyShell = document.querySelector(".sticky-shell");
+      if (!stickyShell) return 12;
+      return Math.ceil(stickyShell.getBoundingClientRect().height) + 16;
+    }
+
+    function scrollFeaturedCardIntoView(cardElement) {
+      if (!cardElement) return;
+      var rect = cardElement.getBoundingClientRect();
+      var headerOffset = getStickyHeaderOffset();
+      var bottomLimit = window.innerHeight - 156;
+      var isAbove = rect.top < headerOffset;
+      var isBelow = rect.bottom > bottomLimit;
+
+      if (!isAbove && !isBelow) return;
+
+      var targetTop = window.scrollY + rect.top - headerOffset;
+      window.scrollTo({
+        top: Math.max(0, targetTop),
+        behavior: "smooth"
+      });
+    }
+
+    function findCardElement(cardId) {
+      return document.querySelector('.card[data-card-id="' + CSS.escape(cardId) + '"]');
+    }
+
+    function clearFeaturedState(options) {
+      var settings = options || {};
+      document.querySelectorAll(".card.is-featured").forEach(function (card) {
+        card.classList.remove("is-featured", "is-pulsing");
+        var helpPanel = card.querySelector(".help-panel");
+        var head = card.querySelector("details.card-head");
+        if (helpPanel && settings.hideHelp) helpPanel.hidden = true;
+        if (settings.collapse && head) head.open = false;
+      });
+    }
+
+    function applyFeaturedState(cardData, options) {
+      var settings = options || {};
+      clearFeaturedState({ collapse: !!settings.collapsePrevious, hideHelp: !!settings.collapsePrevious });
+      var cardElement = findCardElement(cardData.id || cardData.title);
+      if (!cardElement) return;
+      var head = cardElement.querySelector("details.card-head");
+      var helpPanel = cardElement.querySelector(".help-panel");
+      if (head) head.open = true;
+      if (helpPanel) helpPanel.hidden = false;
+      cardElement.classList.add("is-featured");
+      cardElement.classList.remove("is-pulsing");
+      void cardElement.offsetWidth;
+      cardElement.classList.add("is-pulsing");
+      scrollFeaturedCardIntoView(cardElement);
+    }
+
+    function closeFeaturedCardContentKeepHighlight() {
+      document.querySelectorAll(".card.is-featured").forEach(function (card) {
+        var helpPanel = card.querySelector(".help-panel");
+        var head = card.querySelector("details.card-head");
+        if (helpPanel) helpPanel.hidden = true;
+        if (head) head.open = false;
+        card.classList.remove("is-pulsing");
+      });
+    }
+
+    function buildSelectionPool() {
+      return (window.MAIN_CARD_DATA || []).filter(function (card) {
+        return !!findCardElement(card.id || card.title);
+      });
+    }
+
+    function chooseFeaturedCard(excludeId) {
+      var pool = buildSelectionPool();
+      if (!pool.length) return null;
+      if (pool.length === 1) return pool[0];
+      var filtered = pool.filter(function (card) {
+        return (card.id || card.title) !== excludeId;
+      });
+      if (!filtered.length) filtered = pool;
+      return filtered[Math.floor(Math.random() * filtered.length)];
+    }
+
+    var featureHeaderSyncBound = false;
+
+    function syncFeaturePanelPosition() {
+      return;
+    }
+
+    function scheduleFeatureHide() {
+      return;
+    }
+
+    function cancelFeatureHide() {
+      return;
+    }
+
+    function showFeaturedCard(cardData, options) {
+      if (!cardData) return;
+      var settings = options || {};
+      var shell = document.getElementById("featureShell");
+      var mode = getModeLabel(cardData.tier);
+      shell.className = "feature-shell tier-" + cardData.tier;
+      var kicker = document.getElementById("featureKicker");
+      if (kicker) {
+        kicker.textContent = mode;
+        kicker.className = "feature-mode " + (
+          mode === "Behavior" ? "mode-behavior" :
+          mode === "Output" ? "mode-output" : "mode-thinking"
+        ) + " is-active";
+      }
+      document.getElementById("featureTitle").textContent = cardData.title;
+      document.getElementById("featureCopy").textContent = getFeatureDescription(cardData);
+      applyFeaturedState(cardData, { collapsePrevious: !!settings.collapsePrevious });
+      try {
+        localStorage.setItem("aiFeaturedLastCardId", cardData.id || cardData.title);
+      } catch (err) {}
+    }
+
+    function dismissFeaturedCard() {
+      var help = document.querySelector("details.helpbtn");
+      if (help) help.open = false;
+    }
+
+    document.addEventListener("click", function (e) {
+      var chip = e.target.closest(".directive-chip");
+      if (chip) {
+        var cardId = chip.getAttribute("data-card-id");
+        var topic = chip.getAttribute("data-topic");
+        var cardData = getCardData(cardId);
+        var scope = chip.closest(".filtered-directives");
+        if (cardData && scope) {
+          scope.querySelectorAll(".directive-chip").forEach(function (btn) {
+            btn.classList.toggle("active", btn === chip);
+          });
+          scope.querySelector(".directive-topic-content").innerHTML = renderTopicFilteredGroups(cardData, topic);
+        }
+        return;
+      }
+
+      var btn = e.target.closest(".copy-btn");
+      if (!btn) return;
+      var scope = btn.closest(".or-item");
+      copyDirectiveScope(scope);
+      btn.classList.add("copied");
+      btn.textContent = "✓";
+      setTimeout(function () {
+        btn.classList.remove("copied");
+        btn.textContent = "⧉";
+      }, 900);
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      window.cardsDataReady.then(function () {
+        renderMainCardDeck();
+        injectCopyButtons();
+
+        var help = document.querySelector("details.helpbtn");
+        var tierPanel = document.querySelector(".tier-row");
+        var howBtn = document.getElementById("howToUseBtn");
+        if (help && tierPanel) {
+          help.open = false;
+          function syncGuideState() {
+            if (help.open) {
+              tierPanel.classList.add("is-open");
+            } else {
+              tierPanel.classList.remove("is-open");
+              closeFeaturedCardContentKeepHighlight();
+            }
+          }
+          help.addEventListener("toggle", syncGuideState);
+          syncGuideState();
+        }
+        if (howBtn && help) {
+          howBtn.addEventListener("click", function () {
+            help.open = !help.open;
+          });
+        }
+
+        document.querySelectorAll("details.card-head").forEach(function (d) {
+          d.open = false;
+        });
+        document.querySelectorAll(".help-panel").forEach(function (p) {
+          p.hidden = true;
+        });
+        document.querySelectorAll(".help-toggle").forEach(function (btn) {
+          btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var panel = btn.closest(".card").querySelector(".help-panel");
+            panel.hidden = !panel.hidden;
+          });
+        });
+
+        document.querySelectorAll("details.card-head").forEach(function (head) {
+          head.addEventListener("toggle", function () {
+            var card = head.closest(".card");
+            if (card && card.classList.contains("is-featured") && !head.open) {
+              var helpPanel = card.querySelector(".help-panel");
+              if (helpPanel) helpPanel.hidden = true;
+            }
+          });
+        });
+
+        var toggleBtn = document.getElementById("toggleAll");
+        function anyClosed() {
+          return Array.prototype.some.call(document.querySelectorAll("details.card-head"), function (d) {
+            return !d.open;
+          });
+        }
+        function setAll(openState) {
+          document.querySelectorAll("details.card-head").forEach(function (d) {
+            d.open = openState;
+          });
+          if (!openState) {
+            document.querySelectorAll(".help-panel").forEach(function (p) {
+              p.hidden = true;
+            });
+          }
+          toggleBtn.textContent = openState ? "Hide All" : "Show All";
+        }
+        toggleBtn.textContent = "Show All";
+        toggleBtn.addEventListener("click", function () {
+          setAll(anyClosed());
+        });
+
+        var input = document.getElementById("cardSearch");
+        var filterSelect = document.getElementById("filterSelect");
+        var previousCardHeadStates = null;
+        var previousHelpPanelStates = null;
+
+        function captureStates(cards) {
+          previousCardHeadStates = new WeakMap();
+          previousHelpPanelStates = new WeakMap();
+          cards.forEach(function (card) {
+            previousCardHeadStates.set(card, card.querySelector("details.card-head").open);
+            previousHelpPanelStates.set(card, card.querySelector(".help-panel").hidden);
+          });
+        }
+
+        function restoreStates(cards) {
+          if (!previousCardHeadStates || !previousHelpPanelStates) return;
+          cards.forEach(function (card) {
+            card.querySelector("details.card-head").open = previousCardHeadStates.get(card);
+            card.querySelector(".help-panel").hidden = previousHelpPanelStates.get(card);
+          });
+          previousCardHeadStates = null;
+          previousHelpPanelStates = null;
+        }
+
+        function runSearch() {
+          var q = input.value.toLowerCase().trim();
+          var cards = Array.from(document.querySelectorAll("section.columns > article.card"));
+          cards.forEach(clearSearchHighlights);
+
+          if (!q) {
+            cards.forEach(function (card) {
+              card.style.display = "";
+              if (filterSelect) {
+                var sel = filterSelect.value.toLowerCase();
+                if (sel && sel !== "all") {
+                  var topics = (card.dataset.topics || "").split(" ");
+                  if (!topics.includes(sel)) card.style.display = "none";
+                }
+              }
+            });
+            restoreStates(cards);
+            return;
+          }
+
+          if (!previousCardHeadStates) captureStates(cards);
+
+          cards.forEach(function (card) {
+            var cardHead = card.querySelector("details.card-head");
+            var helpPanel = card.querySelector(".help-panel");
+            var title = card.querySelector(".card-title");
+            var directiveBlocks = Array.from(card.querySelectorAll(".or-item"));
+            var titleMatch = elementMatches(title, q);
+            var helpMatch = elementMatches(helpPanel, q);
+            var directiveMatch = directiveBlocks.some(function (element) {
+              return elementMatches(element, q);
+            });
+            var dataMatch = (card.dataset.searchText || "").indexOf(q) !== -1;
+            var matched = titleMatch || directiveMatch || helpMatch || dataMatch;
+
+            if (!matched) {
+              card.style.display = "none";
+              return;
+            }
+
+            card.style.display = "";
+            if (filterSelect) {
+              var sel = filterSelect.value.toLowerCase();
+              if (sel && sel !== "all") {
+                var topics = (card.dataset.topics || "").split(" ");
+                if (!topics.includes(sel)) card.style.display = "none";
+              }
+            }
+
+            if (directiveMatch || helpMatch || dataMatch) cardHead.open = true;
+            if (helpMatch) helpPanel.hidden = false;
+            highlightSearchTerm(card, q);
+          });
+        }
+
+        input.addEventListener("input", runSearch);
+        filterSelect.addEventListener("change", runSearch);
+
+        var nextBtn = document.getElementById("featureNext");
+
+        nextBtn.addEventListener("click", function () {
+          var currentId = null;
+          try {
+            currentId = localStorage.getItem("aiFeaturedLastCardId");
+          } catch (err) {}
+          showFeaturedCard(chooseFeaturedCard(currentId), { collapsePrevious: true });
+        });
+
+        var lastCardId = null;
+        try {
+          lastCardId = localStorage.getItem("aiFeaturedLastCardId");
+        } catch (err) {}
+        if (!featureHeaderSyncBound) {
+          featureHeaderSyncBound = true;
+        }
+        var initialFeaturedCard = chooseFeaturedCard(lastCardId);
+        if (initialFeaturedCard) {
+          var shell = document.getElementById("featureShell");
+          var mode = getModeLabel(initialFeaturedCard.tier);
+          shell.className = "feature-shell tier-" + initialFeaturedCard.tier;
+          var kicker = document.getElementById("featureKicker");
+          if (kicker) {
+            kicker.textContent = mode;
+            kicker.className = "feature-mode " + (
+              mode === "Behavior" ? "mode-behavior" :
+              mode === "Output" ? "mode-output" : "mode-thinking"
+            ) + " is-active";
+          }
+          document.getElementById("featureTitle").textContent = initialFeaturedCard.title;
+          document.getElementById("featureCopy").textContent = getFeatureDescription(initialFeaturedCard);
+        }
+      }).catch(function () {
+        console.error("Unable to load cards-data.js from", window.CARDS_DATA_URL);
+      });
+    });
+  </script>
+</body>
+</html>

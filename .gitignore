@@ -1,0 +1,28 @@
+# Windows
+desktop.ini
+Thumbs.db
+ehthumbs.db
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+._*
+
+# Linux
+*~
+.directory
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Logs / temp
+*.log
+*.tmp

@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<!--
+STATUS: WORKING COPY
+VERSION: v5.1
+DATE: 11-24-2026
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script>
+    /*
+      03-25-2026
+      Author: Art Malin
+      Root folder settings for the AI help pages.
+      Update CHEATSHEET_ROOT once if the folder moves.
+    */
+    window.CHEATSHEET_ROOT = "./";
+window.HOME_URL = window.CHEATSHEET_ROOT + "index.html";
+window.CHEATSHEET_FILE_URL = window.CHEATSHEET_ROOT + "AI_CheatSheet.html";
+window.CHEATSHEET_URL = window.CHEATSHEET_ROOT + "AI_CheatSheet.html";
+window.SEEDS_URL = window.CHEATSHEET_ROOT + "AI_Modes.html";
+window.SKILLS_URL = window.CHEATSHEET_ROOT + "AI_Skills.html";
+  </script>
+<title>AI Skills</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>"/>
+<!--
+Version History (append-only; newest first)
+11-25-2026 — v5.1 — Rename the example skill in the Skills Page Maintainer sample to Proofread Pass.
+11-24-2026 — v5.0 — Create AI_Skills.html from the original Skills page: keep two sample maintainer skills, replace Dimpy and work references with AI, add Home, Cheat Sheet, Modes, and Skills links, puzzle tab icon, remove footer logo, and trim version history before 11-24-2026.
+-->
+<style>
+:root {
+  --bg: #fdfefe;
+  --text: #1f1f1f;
+  --muted: #666;
+  --border: #e2e6ea;
+  --accent: #0078d4;
+  --font: "Segoe UI", Tahoma, Arial, sans-serif;
+  --narrow: "Arial Narrow", "Bahnschrift SemiCondensed", "Segoe UI", Tahoma, Arial, sans-serif;
+  --shadow: 0 2px 6px rgba(0,0,0,.1);
+  --topbar-offset: 0px;
+  --skill-sticky-offset: 0px;
+  --skill-panel-total-height: 65vh;
+}
+* { box-sizing: border-box; }
+html { height: 100%; overflow: hidden; }
+body { height: 100%; overflow: hidden; margin: 0; background: var(--bg); font-family: var(--font); color: var(--text); font-size: 11.5px; line-height: 1.28; }
+.wrap { max-width: 1400px; height: 100vh; margin: 0 auto; padding: 12px; padding-bottom: 12px; display: flex; flex-direction: column; overflow: hidden; }
+.topbar.cheatsheet-topbar { position: relative; z-index: 50; flex-shrink: 0; }
+.page-scroll { padding-top: 10px; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { justify-content: space-between; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; background: radial-gradient(900px 220px at 20% 0%, rgba(255,255,255,.16), rgba(255,255,255,0) 60%), linear-gradient(180deg, #0c5fb0 0%, #083a6e 100%); border-bottom: 1px solid rgba(255,255,255,.18); box-shadow: 0 10px 24px rgba(0,0,0,.25); color: #fff; padding: 10px 16px; border-radius: 10px; }
+.cheatsheet-topbar { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+.topbar-main { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; width: 100%; }
+.topbar-left, .header-leftwrap, .topbar-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.topbar-right { margin-left: auto; justify-content: flex-end; }
+.header-title { font-size: 22px; font-weight: 700; line-height: 1; color: #fff; letter-spacing: .2px; text-shadow: 0 2px 8px rgba(0,0,0,.35); }
+.header-desc { margin-top: 2px; font-size: 12px; color: rgba(255,255,255,.88); font-weight: 500; }
+.header-titlewrap { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.header-logo { height: 34px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,.35)); }
+.topbtn, .searchbox, select { height: 30px; }
+.topbtn { cursor: pointer; padding: 6px 10px; border-radius: 6px; font-family: var(--narrow); font-size: 11.5px; line-height: 1.25; font-weight: 500; background: #0b4f93; color: #fff; border: 1px solid rgba(255,255,255,.25); box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 -1px 0 rgba(0,0,0,.25) inset, 0 2px 0 rgba(0,0,0,.35), 0 6px 12px rgba(0,0,0,.2); }
+.topbtn:hover { filter: brightness(1.08); border-color: rgba(255,255,255,.45); }
+.topbtn:active { transform: translateY(1px); }
+#filterSelect { padding: 4px 8px; font-size: 11px; }
+.quick-guide-row { position: relative; z-index: 45; width: 100%; margin: 0 0 10px 0; flex-shrink: 0; }
+.quick-guide-content { background: #fff; border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow); padding: 8px 12px; }
+.quick-guide-content[hidden] { display: none !important; }
+.quick-guide-content ul { margin: 0; padding-left: 19px; list-style-position: outside; }
+.quick-guide-content li { margin: 0 0 7px 0; padding-left: 3px; line-height: 1.45; }
+.quick-guide-content li:last-child { margin-bottom: 0; }
+.topbar-links { width: 100%; font-size: 12px; color: rgba(255,255,255,.92); line-height: 1.2; }
+.topbar-links a { color: rgba(255,255,255,.96); text-decoration: none; }
+.topbar-links a:hover, .topbar-links a:focus { text-decoration: underline; }
+.topbar-links .sep { color: rgba(255,255,255,.70); padding: 0 6px; }
+.searchbox { color: var(--text); background: #fff; border: 1px solid #ccc; border-radius: 4px; padding: 6px 8px; width: 190px; font-family: var(--narrow); font-size: 11.5px; }
+.page { padding: 4px 2px 0 2px; flex: 1 1 auto; min-height: 0; overflow: hidden; }
+.page section { margin: 0 0 14px 0; }
+.skill-sticky-section { position: relative; z-index: 30; display: grid; grid-template-rows: auto minmax(0,1fr); height: 100%; min-height: 0; overflow: hidden; }
+.page h2 { margin: 0 0 6px 0; font-size: 14px; color: #0c5fb0; }
+.page p, .page li, .page td, .page th { font-size: 12px; line-height: 1.4; }
+.page p { margin: 0 0 8px 0; }
+.page ul { margin: 0; padding-left: 18px; }
+.page ol { margin: 0; padding-left: 22px; }
+.page li { margin: 0 0 5px 0; }
+.page table { width: 100%; border-collapse: collapse; background: #fff; }
+.page th, .page td { padding: 7px 6px; border-top: 1px solid var(--border); text-align: left; vertical-align: top; }
+.page tr:first-child th, .page tr:first-child td { border-top: none; }
+.two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; }
+.mini-note, .skill-list, .skill-preview { background: #fff; border: 1px solid rgba(226,232,240,.9); border-radius: 10px; padding: 10px 12px; }
+.skill-list, .skill-preview { min-height: 0; overflow-y: auto; }
+.mini-note { background: #f8fbff; border: 1px solid rgba(12,95,176,.18); padding: 8px 12px; }
+.skill-layout { display: grid; grid-template-columns: 310px minmax(0,1fr); gap: 18px; align-items: stretch; min-height: 0; margin-top: 8px; }
+.skill-section-header { display: grid; grid-template-columns: 310px minmax(0,1fr); gap: 18px; align-items: baseline; margin: 0 0 6px 0; background: var(--bg); padding: 0 0 2px 0; }
+.skill-section-header h2 { margin: 0; }
+.skill-detail-header { color: #0c5fb0; font-size: 14px; line-height: 1.2; padding: 0 12px; }
+.skill-detail-header .skill-detail-title { font-weight: 700; }
+.skill-detail-header .skill-detail-best { color: #555; font-size: 12px; font-weight: 500; }
+.skill-detail-line { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; width: 100%; }
+.skill-detail-line .skill-detail-title { font-weight: 700; min-width: 0; }
+.skill-detail-line .skill-detail-meta { margin-left: auto; color: var(--text); font-family: var(--font); font-size: 12px; font-weight: 400; line-height: 1.4; text-align: right; white-space: nowrap; }
+.skill-location-line { margin: 0 0 6px 0; }
+.skill-location-line .internal-name { color: #aa4a4a; font-family: var(--narrow); font-size: 12.5px; }
+.skill-link { display: block; padding: 7px 0; color: inherit; cursor: pointer; border-bottom: 1px solid rgba(226,232,240,.9); }
+.skill-link:last-child { border-bottom: none; }
+.skill-link.active { background: #f1f7ff; border-left: 3px solid #0c5fb0; padding-left: 8px; margin-left: -8px; border-radius: 6px; }
+.skill-link.active .skill-name { text-decoration: underline; }
+.skill-name { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; font-size: 13px; font-weight: 600; }
+.skill-name-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.skill-desc { font-size: 12px; color: #666; margin-top: 2px; }
+.best-bet-badge { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; margin-left: 8px; padding: 2px 8px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 10.5px; font-weight: 700; line-height: 1.2; white-space: nowrap; }
+.skill-name .best-bet-badge { margin-left: auto; }
+.skill-detail-title .best-bet-badge { margin-left: 8px; vertical-align: middle; }
+.system-badge { display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 999px; background: #eef2ff; border: 1px solid #c7d2fe; color: #3730a3; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; }
+.skill-meta { font-size: 12px; color: #555; margin-top: 4px; }
+.skill-intro-text { margin-top: 0; padding: 7px 9px; background: #f8fbff; border-left: 3px solid #0c5fb0; color: #334f6f; font-style: italic; }
+.preview-block { margin: 0 0 12px 0; }
+.preview-block:last-child { margin-bottom: 0; }
+.mini-title { font-size: 12px; font-weight: 700; color: #0c5fb0; margin: 0 0 4px 0; }
+.path-code, pre, code { margin: 0; font-family: var(--narrow); font-size: 12.5px; white-space: pre-wrap; word-break: break-word; line-height: 1.45; color: #aa4a4a; }
+.ask-preview { background: #fde8e6; border: 1px solid #f2c8c2; border-radius: 8px; padding: 10px 12px; }
+.skill-location-help { margin-top: 14px !important; display: flex; align-items: center; gap: 6px; }
+.skill-location-help .clippy-icon { font-size: 1.8em; line-height: 1; }
+.skill-location-disclaimer { margin-left: auto; color: var(--muted); font-size: 11px; font-style: italic; text-align: right; white-space: nowrap; }
+footer.topbar { margin-top: 10px; flex-shrink: 0; }
+.search-highlight { background: #fff176; color: inherit; padding: 0 .05em; border-radius: 2px; }
+.skill-link.not-published { opacity: .58; }
+.skill-preview.not-published, .skill-detail-header.not-published { opacity: .58; }
+.publication-notice { margin: 4px 0 8px; color: #7a4d00; font-weight: 700; }
+.skill-link .publication-notice { margin: 2px 0 0; font-size: 10.5px; }
+[hidden] { display:none !important; }
+@media (max-width: 900px) { html, body { overflow: auto; height: auto; } .wrap { height: auto; min-height: 100vh; overflow: visible; } .page-scroll, .page, .skill-sticky-section { overflow: visible; height: auto; } .skill-layout, .skill-section-header { grid-template-columns: 1fr; } .skill-list, .skill-preview { max-height: none; overflow-y: visible; } .skill-location-help { align-items: flex-start; flex-wrap: wrap; } .skill-location-disclaimer { flex-basis: 100%; margin-left: calc(1.8em + 6px); text-align: left; white-space: normal; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar cheatsheet-topbar">
+    <div class="topbar-main">
+      <div class="topbar-left"><div class="header-leftwrap"><div class="header-titlewrap"><div class="header-title">AI Skills</div><div class="header-desc">Sample skill entries showing what a saved AI workflow looks like.</div></div></div></div>
+      <div class="topbar-right">
+        <input id="pageSearch" class="searchbox" type="search" placeholder="Search skills..." />
+        <select id="filterSelect" class="topbtn" title="Filter skills"><option value="" selected>Filter skills</option><option value="all">All</option><option value="sample">Sample</option></select>
+        <button id="quickGuideBtn" class="topbtn" type="button" aria-expanded="false" aria-controls="quickGuideContent">Quick Guide</button>
+      </div>
+    </div>
+    <div class="topbar-links">
+<a href="#" id="navHome" target="_top" title="Start here: what each page is for and how to use it">Home</a>
+<span class="sep">|</span>
+<a href="#" id="navCheat" target="_top" title="Quick snippets to accomplish specific actions">Cheat Sheet</a>
+<span class="sep">|</span>
+<a href="#" id="navSeeds" target="_top" title="Bundled directive blocks you can paste at the start of a chat or any time the task changes">Modes</a>
+<span class="sep">|</span>
+<a href="#" id="navSkills" target="_top" title="Sample skill entries and what skills are for">Skills</a>
+</div>
+  </div>
+
+  <div class="page-scroll">
+  <div class="quick-guide-row">
+    <div class="quick-guide-content" id="quickGuideContent" hidden>
+      <section>
+        <p>Skills are saved, step-by-step workflows the AI follows the same way every time. They work in Claude and ChatGPT. The two entries below are <b>samples only</b>, taken from the original setup, to show what a skill does and how one is described. They are not installed for you. <a href="index.html#skills">How skills work and how to build one</a></p>
+      </section>
+      <section class="two-col">
+        <div class="mini-note"><h2>Find the right skill</h2><ul><li>Start with a Best Bet or pick the skill that matches the job you need help with.</li><li>Use the filter to narrow the list by recommendation or type of work.</li><li>Use the search box when you know a keyword, tool, or topic.</li></ul></div>
+        <div class="mini-note"><h2>Use the detail pane</h2><ul><li>The detail pane explains what the selected skill does and how to use it.</li><li>Check what files, links, or details are needed before you start.</li><li>Use the kickoff prompt to begin, then review the output and follow-up steps.</li></ul></div>
+        <div class="mini-note"><h2>Build your own</h2><ul><li>Ask the AI: "Build me a skill that..." and describe the job.</li><li>The AI drafts the skill and tells you how to install it in that app's settings.</li><li>Add an entry for it here with the Skills Page Maintainer sample as your guide.</li></ul></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="page"><section class="skill-sticky-section"><div class="skill-section-header"><h2>Select skill below</h2><div class="skill-detail-header" id="skillDetailHeader">Select a skill.</div></div><div class="skill-layout"><div class="skill-list" id="msSkillList"></div><div class="skill-preview" id="msSkillPreview">Select a skill on the left.</div></div></section></div>
+  </div>
+
+  <footer class="topbar"><div class="topbar-left"><div class="header-leftwrap"><div class="header-desc">11-24-2026 Art Malin - sample skills page.</div></div></div><div class="topbar-right"><div class="header-desc">AI_Skills.html</div></div></footer>
+</div>
+
+<script type="application/json" id="SkillData">{"skills": [{"name": "cheatsheet-cards-maintainer", "internal_name": "cheatsheet-cards-maintainer", "label": "Cheat Sheet Cards Maintainer", "title": "Cheat Sheet Cards Maintainer", "summary": "Sample only: a skill that maintains the Cheat Sheet card data.", "description": "Sample only. This is an example maintenance skill from the original setup and is not installed for you. It shows how a skill can add, update, delete, validate, and reorder cards in cards-data.js while keeping the card format and sort order intact.", "categories": ["Sample"], "best_used_for": "Example: maintaining Cheat Sheet card data", "opening_summary": "Sample only. This shows how a skill can safely update the data behind the AI Cheat Sheet: add, change, delete, validate, or reorder cards while preserving the card format, topics, and sort order.", "what_needed_intro": "Provide the current card data and the exact change you want.", "what_needed": ["The current cards-data.js file.", "The card title, or the exact new card content to add.", "The operation: add, update, delete, validate, or reorder.", "AI_CheatSheet.html only if the change needs the page itself to change."], "kickoff_prompt": "Use the Cheat Sheet Cards Maintainer skill to update this cards-data.js file with the following card change.", "example": "Use the Cheat Sheet Cards Maintainer skill to add a new card to cards-data.js.", "outputs": ["One complete updated cards-data.js file.", "Validation notes if anything in the card format is wrong."], "steps_after": "Save the returned cards-data.js in the same folder as AI_CheatSheet.html, then open the page and check the cards.", "gotchas": ["Sample only: build and install the skill before the kickoff prompt will work.", "cards-data.js holds the cards; the page itself rarely needs to change.", "Keep each card's id the same as its title.", "Keep cards sorted by tier, then sortOrder.", "Stop and ask when a change needs the page code to change too."], "publication_status": "not-published", "publication_notice": "Sample only. Not installed. Ask the AI to build it from this description if you want it."}, {"name": "skills-page-maintainer", "internal_name": "skills-page-maintainer", "label": "Skills Page Maintainer", "title": "Skills Page Maintainer", "summary": "Sample only: a skill that adds and updates entries on this Skills page.", "description": "Sample only. This is an example maintenance skill from the original setup and is not installed for you. It shows how a skill can keep AI_Skills.html current from the skills you actually have, without redesigning the page.", "categories": ["Sample"], "best_used_for": "Example: keeping this Skills page current", "opening_summary": "Sample only. This shows how a skill can add or refresh entries on this Skills page from your real skill files, keeping the layout, search, and Best Bets intact. Once you build your own skills, a skill like this keeps the page up to date.", "what_needed_intro": "Provide the current page and the skills to document.", "what_needed": ["The current AI_Skills.html file.", "The SKILL.md file, or the exported skill, for each skill being added or updated.", "Which entries to add, update, or remove."], "kickoff_prompt": "Use the Skills Page Maintainer skill to add this skill to my AI_Skills.html page.", "example": "Use the Skills Page Maintainer skill to add my Proofread Pass skill to AI_Skills.html.", "outputs": ["A complete updated AI_Skills.html file.", "A short list of what was added or changed."], "steps_after": "Save the returned file over AI_Skills.html, open it, and check the new entry.", "gotchas": ["Sample only: build and install the skill before the kickoff prompt will work.", "Read each skill's SKILL.md before writing its entry; don't guess from the name.", "Don't invent versions, dates, or links.", "Don't redesign the page; change only the entries.", "Best Bets are your choice; the skill should not pick them."], "publication_status": "not-published", "publication_notice": "Sample only. Not installed. Ask the AI to build it from this description if you want it."}]}</script>
+<script>
+/*
+  09-14-2026
+  Author: Art Malin
+  Render, filter, navigate, and safely highlight entries in the AI Skills page.
+*/
+document.addEventListener("DOMContentLoaded", function () {
+  var map = { navHome: window.HOME_URL, navCheat: window.CHEATSHEET_URL, navSeeds: window.SEEDS_URL, navSkills: window.SKILLS_URL };
+  Object.keys(map).forEach(function (id) { var el = document.getElementById(id); if (el) el.href = map[id]; });
+  var data = JSON.parse(document.getElementById("SkillData").textContent).skills || [];
+  var listEl = document.getElementById("msSkillList");
+  var previewEl = document.getElementById("msSkillPreview");
+  var detailHeaderEl = document.getElementById("skillDetailHeader");
+  var pageSearch = document.getElementById("pageSearch");
+  var filterSelect = document.getElementById("filterSelect");
+  var quickGuideBtn = document.getElementById("quickGuideBtn");
+  var quickGuideContent = document.getElementById("quickGuideContent");
+  var active = 0;
+  data.sort(compareSkills);
+  var visibleSkills = data.slice();
+
+  // Escape untrusted text before inserting it into generated markup.
+  function escapeHtml(str) { return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+
+  // Escape regular-expression metacharacters in a search query.
+  function escapeRegExp(str) { return String(str).replace(/[.*+?^$\{}()|[\]\\]/g, "\\$&"); }
+
+  // Escape text and then wrap each case-insensitive search match safely.
+  function highlightText(str) {
+    var text = String(str == null ? "" : str);
+    var query = (pageSearch && pageSearch.value || "").trim();
+    if (!query) return escapeHtml(text);
+    var expression = new RegExp(escapeRegExp(query), "gi");
+    var htmlText = "";
+    var lastIndex = 0;
+    var match;
+    while ((match = expression.exec(text)) !== null) {
+      htmlText += escapeHtml(text.slice(lastIndex, match.index));
+      htmlText += '<mark class="search-highlight">' + escapeHtml(match[0]) + '</mark>';
+      lastIndex = match.index + match[0].length;
+    }
+    return htmlText + escapeHtml(text.slice(lastIndex));
+  }
+
+  // Render the optional Best Bet marker for active regular-user skills.
+  function renderBestBetBadge(skill) { return skill && skill.is_best_bet && skill.publication_status !== "not-published" && !skill.is_system_skill ? '<span class="best-bet-badge">' + highlightText(skill.internal_name === 'sharepoint-knowledge-navigator' ? '🙏 Hail Mary' : 'Best Bet') + '</span>' : ''; }
+
+  // Render the optional System marker.
+  function renderSystemBadge(skill) { return skill && skill.is_system_skill ? '<span class="system-badge">' + highlightText('System') + '</span>' : ''; }
+
+  // Render the standardized published date and documented version line.
+  function renderSkillVersionDate(skill) {
+    if (!skill) return "";
+    var version = skill.skill_version || skill.version || "";
+    var updated = skill.published_updated || skill.skill_updated || skill.updated_date || skill.last_updated || "";
+    if (updated && version) return "Updated " + updated + " (" + version + ")";
+    if (updated) return "Updated " + updated;
+    if (version) return "(" + version + ")";
+    return "";
+  }
+
+  // Render a publication-status notice when an entry is retained but not currently published.
+  function renderPublicationNotice(skill) {
+    if (!skill || skill.publication_status !== "not-published") return "";
+    return '<div class="publication-notice">' + highlightText(skill.publication_notice || 'Not currently published in Workspace Admin Skills.') + '</div>';
+  }
+
+  // Render the selected skill heading and metadata.
+  function renderSkillDetailHeader(skill) {
+    if (!skill) return "Select a skill.";
+    var label = highlightText(skill.label || skill.title || "");
+    var versionDate = renderSkillVersionDate(skill);
+    var versionHtml = versionDate ? '<span class="skill-detail-meta skill-detail-version">' + highlightText(versionDate) + '</span>' : '';
+    return '<div class="skill-detail-line"><span class="skill-detail-title">' + label + renderBestBetBadge(skill) + '</span>' + versionHtml + '</div>' + renderSystemBadge(skill);
+  }
+
+  // Render the System-skill explanation block.
+  function renderSkillTypeBlock(skill) { if (!skill || !skill.is_system_skill) return ''; return '<div class="preview-block"><div class="mini-title">Skill type</div><p><span class="system-badge">' + highlightText('System') + '</span> ' + highlightText('This is a system-provided skill.') + '</p></div>'; }
+
+  // Normalize a category name for filter matching.
+  function normalizeCategory(value) { return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""); }
+
+  // Sort active Best Bets in the approved editorial order, then other active skills alphabetically, retained unpublished skills, and System skills.
+  function compareSkills(left, right) {
+    var bestBetOrder = [
+      "sharepoint-knowledge-navigator",
+      "nitro-m365-converter",
+      "m365-docgen"
+    ];
+    function key(skill) { return skill.internal_name || skill.name || ""; }
+    function group(skill) {
+      if (skill.is_system_skill) return 3;
+      if (skill.publication_status === "not-published") return 2;
+      return skill.is_best_bet ? 0 : 1;
+    }
+    var groupDifference = group(left) - group(right);
+    if (groupDifference) return groupDifference;
+    if (group(left) === 0) {
+      var leftRank = bestBetOrder.indexOf(key(left));
+      var rightRank = bestBetOrder.indexOf(key(right));
+      if (leftRank !== rightRank) return leftRank - rightRank;
+    }
+    var leftName = left.label || left.title || left.internal_name || left.name || "";
+    var rightName = right.label || right.title || right.internal_name || right.name || "";
+    return leftName.localeCompare(rightName, "en", { sensitivity: "base" });
+  }
+
+  // Keep the existing page-height variables synchronized.
+  function updateStickyLayout() { document.documentElement.style.setProperty("--topbar-offset", "0px"); document.documentElement.style.setProperty("--skill-sticky-offset", "0px"); document.documentElement.style.setProperty("--skill-panel-total-height", "100%"); }
+
+  // Render a list of safely escaped and highlighted text values.
+  function renderList(items) { if (!items || !items.length) return ""; return '<ul>' + items.map(function (item) { return '<li>' + highlightText(item) + '</li>'; }).join("") + '</ul>'; }
+
+  // Render ordered operator steps for skills that require preparation before kickoff.
+  function renderWorkflowSteps(items) {
+    if (!items || !items.length) return "";
+    return '<div class="preview-block"><div class="mini-title">' + highlightText('From solution export to documentation') + '</div><ol>' + items.map(function (item) { return '<li>' + highlightText(item) + '</li>'; }).join("") + '</ol></div>';
+  }
+
+  // Render one plain-text detail block.
+  function renderTextBlock(title, content) { if (!content) return ""; return '<div class="preview-block"><div class="mini-title">' + highlightText(title) + '</div><p>' + highlightText(content) + '</p></div>'; }
+
+  // Render a titled list block with an optional introduction.
+  function renderListBlock(title, intro, items) { if (!items || !items.length) return ""; return '<div class="preview-block"><div class="mini-title">' + highlightText(title) + '</div>' + (intro ? '<p>' + highlightText(intro) + '</p>' : '') + renderList(items) + '</div>'; }
+
+  // Render the skill location and access guidance.
+  function renderSkillLocation(skill) {
+    var skillName = skill && (skill.label || skill.title || skill.name) || "this";
+    var internalName = skill && (skill.internal_name || skill.name) || "";
+    var linkHtml = skill && skill.skill_url ? '<p class="skill-location-line"><a href="' + escapeHtml(skill.skill_url) + '" target="_blank" rel="noopener">' + highlightText('Open skill: ' + skillName) + '</a>' + (internalName ? ' <span class="internal-name">(' + highlightText(internalName) + ')</span>' : '') + '</p>' : '<p class="skill-location-line">' + highlightText('No direct skill link is listed for ' + skillName + ' yet.') + (internalName ? ' <span class="internal-name">(' + highlightText(internalName) + ')</span>' : '') + '</p>';
+    return '<div class="preview-block"><div class="mini-title">' + highlightText('Skill Location') + '</div>' + linkHtml + '<p>' + highlightText('Skills you build live in your AI app\'s settings. Ask the AI where to find or install them.') + '</p><p class="skill-location-help"><span class="clippy-icon">📎</span><span>' + highlightText('Looks like you’re installing a skill. Need a hand? Ask the AI.') + '</span><span class="skill-location-disclaimer">' + highlightText('Location is subject to change at the AI’s whim.') + '</span></p></div>';
+  }
+
+  // Render operator-run preparation scripts when a skill documents them.
+  function renderPreparationScripts(items) {
+    if (!items || !items.length) return "";
+    var htmlText = '<div class="preview-block"><div class="mini-title">' + highlightText('Preparation scripts') + '</div>';
+    items.forEach(function (item) {
+      htmlText += '<p><strong>' + highlightText(item.title || "Preparation script") + '</strong></p>';
+      if (item.script) htmlText += '<div class="path-code">' + highlightText(item.script) + '</div>';
+      if (item.summary) htmlText += '<p>' + highlightText(item.summary) + '</p>';
+      if (item.variables && item.variables.length) htmlText += '<p><strong>' + highlightText('Set these variables:') + '</strong></p>' + renderList(item.variables);
+      if (item.outputs && item.outputs.length) htmlText += '<p><strong>' + highlightText('Expected output:') + '</strong></p>' + renderList(item.outputs);
+    });
+    return htmlText + '</div>';
+  }
+
+  // Build the complete detail pane for one skill.
+  function buildPreview(skill) {
+    if (!skill) return highlightText("No matching skills.");
+    var hasGuideFields = !!(skill.opening_summary || skill.preparation_scripts || skill.workflow_steps || skill.what_needed || skill.kickoff_prompt || skill.outputs || skill.steps_after || skill.gotchas);
+    var notice = renderPublicationNotice(skill);
+    if (hasGuideFields) {
+      return notice + '<div class="preview-block"><p class="skill-intro-text">' + highlightText(skill.opening_summary || skill.description || "") + '</p></div>' + '<div class="preview-block"><div class="mini-title">' + highlightText('Categories') + '</div><p>' + highlightText((skill.categories || []).join(", ")) + '</p></div>' + renderSkillTypeBlock(skill) + renderWorkflowSteps(skill.workflow_steps) + renderPreparationScripts(skill.preparation_scripts) + renderListBlock('What is needed for this skill?', skill.what_needed_intro || '', skill.what_needed) + (skill.kickoff_prompt ? '<div class="preview-block"><div class="mini-title">' + highlightText('How to kick off the skill') + '</div><p>' + highlightText('Ask:') + '</p><div class="ask-preview"><pre><code>' + highlightText(skill.kickoff_prompt) + '</code></pre></div></div>' : '') + renderListBlock('Output', '', skill.outputs) + renderTextBlock('Steps after', skill.steps_after) + renderListBlock('Gotchas', '', skill.gotchas) + renderSkillLocation(skill);
+    }
+    return notice + '<div class="preview-block"><p class="skill-intro-text">' + highlightText(skill.description || "") + '</p></div>' + renderSkillTypeBlock(skill) + '<div class="preview-block"><div class="mini-title">' + highlightText('Categories') + '</div><p>' + highlightText((skill.categories || []).join(", ")) + '</p></div><div class="preview-block"><div class="mini-title">' + highlightText('Example ask') + '</div><div class="ask-preview"><pre><code>' + highlightText(skill.example || "") + '</code></pre></div></div>' + renderSkillLocation(skill);
+  }
+
+  // Render the filtered skill list and active detail pane.
+  function render(skillList) {
+    listEl.innerHTML = "";
+    if (!skillList.length) { previewEl.textContent = "No matching skills."; if (detailHeaderEl) detailHeaderEl.textContent = "No matching skills."; return; }
+    if (active >= skillList.length) active = 0;
+    var activeSkill = skillList[active];
+    var activeIsUnpublished = activeSkill && activeSkill.publication_status === "not-published";
+    if (detailHeaderEl && activeSkill) {
+      detailHeaderEl.innerHTML = renderSkillDetailHeader(activeSkill);
+      detailHeaderEl.classList.toggle("not-published", activeIsUnpublished);
+    }
+    previewEl.classList.toggle("not-published", activeIsUnpublished);
+    skillList.forEach(function (skill, index) {
+      var item = document.createElement("div");
+      item.className = "skill-link" + (skill.is_best_bet ? " best-bet" : "") + (skill.publication_status === "not-published" ? " not-published" : "") + (index === active ? " active" : "");
+      item.innerHTML = '<div class="skill-name"><span class="skill-name-text">' + highlightText(skill.label || skill.title || "") + renderSystemBadge(skill) + '</span>' + renderBestBetBadge(skill) + '</div><div class="skill-desc">' + highlightText(skill.summary || skill.description || "") + '</div>' + renderPublicationNotice(skill);
+      item.addEventListener("click", function () { active = index; render(skillList); });
+      listEl.appendChild(item);
+    });
+    previewEl.innerHTML = buildPreview(skillList[active]);
+    var activeItem = listEl.querySelector(".skill-link.active");
+    if (activeItem) activeItem.scrollIntoView({ block: "nearest" });
+  }
+
+  // Move the active selection with the keyboard.
+  function moveActiveSkill(delta) {
+    if (!visibleSkills.length) return;
+    active = Math.max(0, Math.min(visibleSkills.length - 1, active + delta));
+    render(visibleSkills);
+  }
+
+  // Filter entries by search text and category, then rerender with highlights.
+  function applyFilters() {
+    var q = (pageSearch && pageSearch.value || "").trim().toLowerCase();
+    var selected = (filterSelect && filterSelect.value || "").toLowerCase();
+    visibleSkills = data.filter(function (skill) {
+      var textMatch = !q || [skill.title || "", skill.label || "", skill.internal_name || "", skill.name || "", skill.best_used_for || "", skill.summary || "", skill.description || "", skill.path || "", skill.example || "", skill.opening_summary || "", skill.what_needed_intro || "", (skill.workflow_steps || []).join(" "), (skill.what_needed || []).join(" "), skill.kickoff_prompt || "", (skill.outputs || []).join(" "), skill.steps_after || "", (skill.gotchas || []).join(" "), (skill.categories || []).join(" "), skill.skill_version || "", skill.published_updated || skill.skill_updated || skill.updated_date || skill.last_updated || "", skill.publication_notice || ""].join(" ").toLowerCase().indexOf(q) !== -1;
+      var categoryMatch = !selected || selected === "all" || (selected === "best-bets" ? skill.is_best_bet && skill.publication_status !== "not-published" && !skill.is_system_skill : (skill.categories || []).some(function (cat) { return normalizeCategory(cat) === selected; }));
+      return textMatch && categoryMatch;
+    });
+    active = 0;
+    render(visibleSkills);
+  }
+
+  if (pageSearch) pageSearch.addEventListener("input", applyFilters);
+  if (filterSelect) filterSelect.addEventListener("change", applyFilters);
+  document.addEventListener("keydown", function (event) {
+    var tagName = event.target && event.target.tagName ? event.target.tagName.toLowerCase() : "";
+    if (["input", "select", "textarea", "button"].indexOf(tagName) !== -1) return;
+    if (event.key === "ArrowDown") { event.preventDefault(); moveActiveSkill(1); }
+    if (event.key === "ArrowUp") { event.preventDefault(); moveActiveSkill(-1); }
+  });
+  if (quickGuideBtn && quickGuideContent) { quickGuideBtn.addEventListener("click", function () { var isHidden = quickGuideContent.hasAttribute("hidden"); if (isHidden) { quickGuideContent.removeAttribute("hidden"); quickGuideBtn.setAttribute("aria-expanded", "true"); } else { quickGuideContent.setAttribute("hidden", ""); quickGuideBtn.setAttribute("aria-expanded", "false"); } updateStickyLayout(); }); }
+  window.addEventListener("resize", updateStickyLayout);
+  updateStickyLayout();
+  render(visibleSkills);
+});
+</script>
+
+<script>
+    /*
+      05-06-2026
+      Author: Art Malin
+      Wire top navigation links from configured page URLs.
+    */
+    document.addEventListener("DOMContentLoaded", function () {
+      var map = {
+        navHome: window.HOME_URL,
+        navCheat: window.CHEATSHEET_URL,
+        navSeeds: window.SEEDS_URL,
+        navSkills: window.SKILLS_URL
+      };
+      Object.keys(map).forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.href = map[id];
+      });
+    });
+  </script>
+</body>
+</html>

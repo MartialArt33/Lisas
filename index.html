@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--
+STATUS: WORKING COPY
+VERSION: v2.8
+DATE: 11-25-2026
+Home page for AI_CheatSheet.html, AI_Modes.html, and AI_Skills.html.
+-->
+<!-- Version History (append-only; newest first)
+11-25-2026 — v2.8 — Update for how Lisa works: passage-sized examples, American English by default, marked-up changes before finalizing, Keep the author's voice, and Proofread Pass as the first skill.
+11-25-2026 — v2.7 — Remove the How to use it line from the buttons and reword the top-links note.
+11-25-2026 — v2.6 — Move the more lines to the bottom of each list, add a How to use it cue to each button, and point to the top links for going straight to a page.
+11-25-2026 — v2.5 — Show favorite cards and non-IT modes as single-column full titles with a more indicator, remove list links, and update the heading and hint.
+11-25-2026 — v2.4 — Make the three buttons the same height, restyle the lists below them as small gray text with colored bullets, and generalize the Skills note.
+11-25-2026 — v2.3 — Add short card and mode names under the Cheat Sheet and Modes buttons and a first-skill note under Skills.
+11-25-2026 — v2.2 — Rename the three buttons Cheat Sheet, Modes, and Skills with short descriptions, and remove the lists below them.
+11-24-2026 — v2.1 — Move the card, mode, and skill lists under their buttons.
+11-24-2026 — v2.0 — Redesign as the "What's going on?" problem picker with related card and mode lists and a step-through for building the Americanize Section skill.
+11-24-2026 — v1.1 — Add Skills link to AI_Skills.html.
+11-24-2026 — v1.0 — Create home and training page with page links, training sections, and Skills guide.
+-->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Help Home</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>"/>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Tahoma,Arial,sans-serif;color:#1f2933;line-height:1.5}
+.nav{background:#0c5fb0;padding:8px 16px;font-size:13px}
+.nav a{color:#fff;text-decoration:none;font-weight:600}
+.nav a:hover{text-decoration:underline}
+.nav span{color:rgba(255,255,255,.5);margin:0 8px}
+.copy{position:relative;background:#f6f8fa;border:1px solid #dde3ea;border-radius:8px;padding:10px 44px 10px 12px;font-family:Consolas,ui-monospace,monospace;font-size:13px;white-space:pre-wrap;margin:6px 0 10px}
+.copy button{position:absolute;top:6px;right:6px;border:1px solid #c9d3dd;background:#fff;border-radius:6px;font-size:12px;padding:3px 8px;cursor:pointer}
+.copy button.ok{background:#e6f4ea;border-color:#8cc59a}
+.ph{color:#8a5a00;font-style:italic}
+a.go{color:#0c5fb0;font-weight:600}
+.foot{font-size:11px;color:#7b8794;text-align:center;padding:20px}
+
+body{background:#f4f6fb}
+.wrap{max-width:900px;margin:0 auto;padding:34px 18px}
+h1{text-align:center;font-size:32px;margin:0}
+.sub{text-align:center;color:#52606d;font-size:16px;margin:6px 0 24px}
+.picks{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.pick{background:#fff;border:2px solid #dde3ea;border-radius:14px;padding:18px;font-size:17px;font-weight:600;cursor:pointer;text-align:left;font-family:inherit;color:#1f2933}
+.pick{display:flex;flex-direction:column}
+.pick small{display:block;font-weight:400;color:#7b8794;font-size:13px;margin-top:4px}
+.cue{margin-top:auto;padding-top:10px;font-size:12.5px;font-weight:600;color:#0c5fb0}
+.pick.on .cue{color:#084a8a}
+.pick:hover{border-color:#0c5fb0}
+.pick.on{border-color:#0c5fb0;background:#eaf3ff;box-shadow:0 4px 12px rgba(12,95,176,.15)}
+.panel{display:none;background:#fff;border-radius:14px;margin-top:18px;padding:22px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.panel.on{display:block}
+.panel h2{margin:0 0 6px;font-size:20px}
+.step{display:flex;gap:12px;margin:14px 0}
+.n{flex:0 0 28px;height:28px;border-radius:50%;background:#0c5fb0;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
+.step>div{flex:1;font-size:15px}
+.next{background:#fff8e6;border-radius:8px;padding:10px 12px;font-size:14px;margin-top:8px}
+.sub2{font-size:13px;color:#9aa5b1}
+.hint{text-align:center;color:#9aa5b1;margin-top:18px;font-size:14px}
+.picks{align-items:stretch}
+.pickcol{display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:0}
+.pickcol .pick{width:100%;height:100%}
+.opts{list-style:none;margin:12px 8px 0;padding:0;font-size:12px;line-height:1.35;color:#616e7c}
+.opts li{margin:0 0 2px;break-inside:avoid;padding-left:11px;position:relative}
+.opts li::before{content:"•";position:absolute;left:0;top:0;color:var(--b)}
+.opts.card{--b:#c2410c}.opts.mode{--b:#0c5fb0}
+.more{margin:6px 8px 0 19px;font-size:12px;line-height:1.35;color:#9aa5b1;font-style:italic}
+.optnote{margin:12px 8px 0;font-size:12px;line-height:1.35;color:#616e7c}
+.optnote a{color:#0c5fb0}
+.pickcol .pick{width:100%}
+.related{padding:10px 4px 0;font-size:13px}
+.related .rl{font-weight:700;color:#52606d;margin-right:6px}
+.related div{margin:2px 0 6px}
+.related .rl{display:block;margin-bottom:2px}
+.chip{display:inline-block;border-radius:999px;padding:2px 10px;margin:2px 2px;font-size:12.5px;text-decoration:none;border:1px solid}
+.chip.card{background:#fff4ec;border-color:#f3c7a8;color:#9a3412}
+.chip.mode{background:#eaf3ff;border-color:#b6d4f5;color:#0c5fb0}
+.chip.skill{background:#f3ecff;border-color:#d3c0f7;color:#6d28d9}
+.chip:hover{filter:brightness(.95)}
+.stepper .sv{display:none}.stepper .sv.on{display:block}
+.prog{display:flex;gap:6px;margin:12px 0}
+.prog span{flex:1;height:6px;border-radius:3px;background:#e4e7eb}
+.prog span.done{background:#7c3aed}
+.sv h3{margin:4px 0 6px;font-size:17px;color:#6d28d9}
+.sv p,.sv li{font-size:15px}
+.sv ul{margin:4px 0;padding-left:20px}
+.nav2{display:flex;justify-content:space-between;margin-top:12px}
+.nav2 button{font-family:inherit;font-size:14px;padding:7px 16px;border-radius:8px;border:1px solid #c9d3dd;background:#fff;cursor:pointer}
+.nav2 button.primary{background:#7c3aed;border-color:#7c3aed;color:#fff}
+.nav2 button:disabled{opacity:.4;cursor:default}
+</style></head><body>
+<nav class="nav"><a href="index.html">Home</a><span>|</span><a href="AI_CheatSheet.html">Cheat Sheet</a><span>|</span><a href="AI_Modes.html">Modes</a><span>|</span><a href="AI_Skills.html">Skills</a></nav>
+<div class="wrap"><h1>Three tools for better AI help</h1><div class="sub">For the times you want a hand from AI. Click a tool below to learn how to use it.<br><span class="sub2">To go straight to a page, use the links above.</span></div>
+<div class="picks">
+<div class="pickcol"><button class="pick" data-p="pA">🔧 Cheat Sheet<small>Quick one-off fixes. Paste a card when the AI does something you didn't want, like rewording the author or changing text you didn't ask about.</small></button><div class="under"><ul class="opts card"><li>Don&#x27;t make additional changes</li><li>Keep the author&#x27;s voice</li><li>Single line examples</li><li>Edit level</li><li>Stay focused on task</li><li>Continue in new chat (thorough)</li><li>Don&#x27;t guess</li></ul><div class="more">…and 11 more</div></div></div>
+<div class="pickcol"><button class="pick" data-p="pB">🌱 Modes<small>Ground rules for a whole session. Paste one at the start of a chat so the AI changes only what you ask.</small></button><div class="under"><ul class="opts mode"><li>Prompt Mode and Task Focus</li><li>Manuscript Editing</li><li>Reference</li><li>Build My Reference</li><li>Drift Reset</li></ul><div class="more">…and 3 more</div></div></div>
+<div class="pickcol"><button class="pick" data-p="pC">🧩 Skills<small>Saved workflows for jobs you repeat. Build one once and it runs the same steps every time.</small></button><div class="under"><p class="optnote">Click <b>Skills</b> above to step through building your first skill. <a href="AI_Skills.html">See sample skills</a></p></div></div>
+</div><div class="panel" id="pA"><h2>Rein it in with a card</h2>
+<div class="step"><span class="n">1</span><div>Open the <a class="go" href="AI_CheatSheet.html">Cheat Sheet</a> and copy the <b>Edit level</b> card.</div></div>
+<div class="step"><span class="n">2</span><div>Paste it into your chat, followed by this:<div class="copy" data-copy="Proofread only this paragraph and show the changes before finalizing:"><span class="ph">[paste the card here]</span>
+Proofread only this paragraph and show the changes before finalizing:
+<span class="ph">[paste the paragraph]</span></div></div></div>
+<div class="step"><span class="n">3</span><div>Check the marked-up changes and approve the ones you want. Nothing else gets touched.</div></div>
+<div class="next">Still drifting? Start the chat with the <b>Manuscript Editing</b> mode instead.</div></div><div class="panel" id="pB"><h2>Set the ground rules with a mode</h2>
+<div class="step"><span class="n">1</span><div>Open <a class="go" href="AI_Modes.html">Modes</a>. Copy <b>Prompt Mode and Task Focus</b>, then <b>Manuscript Editing</b>, and paste both into a new chat.</div></div>
+<div class="step"><span class="n">2</span><div>Let the AI write the full prompt for you:<div class="copy" data-copy="Prompts Only: Proofread the attached chapter and suggest clearer wording for any awkward sentences. The author wants Australian English. Don&#x27;t change anything else.">Prompts Only: Proofread the attached chapter and suggest clearer wording for any awkward sentences. The author wants Australian English. Don&#x27;t change anything else.</div></div></div>
+<div class="step"><span class="n">3</span><div>Read the prompt it gives back. Ask for changes if something is missing.</div></div>
+<div class="step"><span class="n">4</span><div>Type <b>Go</b> to run it.</div></div>
+<div class="next">The modes stay in force for the whole chat. Paste them again if a long chat starts to wander.</div></div><div class="panel" id="pC"><h2>Build your first skill: Proofread Pass</h2>
+<p style="font-size:15px;margin:0">Walk through it one step at a time. It takes about ten minutes.</p>
+<div class="stepper" id="stepper"><div class="prog"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="sv on"><h3>Step 1 of 6: Ask the AI to build it</h3><p>Open a new chat and paste this request:</p><div class="copy" data-copy="Build me a skill called Proofread Pass. When I give you a passage, proofread it for spelling, grammar, and punctuation in American English unless I name another variety (UK, Canadian, Australian). Suggest clearer wording for sentences that are hard to follow, without changing the meaning or the author&#x27;s voice. Change nothing else. Return the passage marked up with deletions struck through and additions in bold, then a short numbered list of the changes. After I approve, return the clean final text with only the approved changes. Then walk me through installing it.">Build me a skill called Proofread Pass. When I give you a passage, proofread it for spelling, grammar, and punctuation in American English unless I name another variety (UK, Canadian, Australian). Suggest clearer wording for sentences that are hard to follow, without changing the meaning or the author&#x27;s voice. Change nothing else. Return the passage marked up with deletions struck through and additions in bold, then a short numbered list of the changes. After I approve, return the clean final text with only the approved changes. Then walk me through installing it.</div></div><div class="sv"><h3>Step 2 of 6: Check the draft</h3><p>The AI writes the skill and shows it to you. Before you accept it, make sure it says:</p><ul><li>use American English unless you name another</li><li>change nothing beyond what you ask</li><li>show a marked-up version before finalizing</li></ul><p>If anything is missing, say so, for example: "Add a rule to leave quotations in their original spelling."</p></div><div class="sv"><h3>Step 3 of 6: Install it</h3><p>Follow the install steps the AI gives you. Claude and ChatGPT both keep skills in their settings, but the menus change often, so let the AI give you the current steps.</p></div><div class="sv"><h3>Step 4 of 6: Test it on one page</h3><p>Try it on something short:</p><div class="copy" data-copy="Run Proofread Pass on this paragraph:">Run Proofread Pass on this paragraph:</div><p>Paste a paragraph after it. Check that the changes come marked up, nothing else changed, and nothing is final until you approve.</p></div><div class="sv"><h3>Step 5 of 6: Fine-tune it</h3><p>Tell the AI what to adjust, and it updates the skill:</p><div class="copy" data-copy="Update the Proofread Pass skill to leave dialogue punctuation alone.">Update the Proofread Pass skill to leave dialogue punctuation alone.</div></div><div class="sv"><h3>Step 6 of 6: Use it every week</h3><p>From now on a short request is enough, with no pasting:</p><div class="copy" data-copy="Proofread Pass on this page.">Proofread Pass on this page.</div><p>To add it to your <a class="go" href="AI_Skills.html">Skills</a> page, use the Skills Page Maintainer sample as a guide.</p></div>
+<div class="nav2"><button type="button" id="sBack">Back</button><button type="button" class="primary" id="sNext">Next</button></div></div>
+</div><div class="hint" id="hint">Choose one above to see your options.</div></div>
+<script>
+document.querySelectorAll(".pick").forEach(function(b){b.addEventListener("click",function(){
+document.querySelectorAll(".pick").forEach(function(x){x.classList.remove("on")});
+document.querySelectorAll(".panel").forEach(function(x){x.classList.remove("on")});
+b.classList.add("on");document.getElementById(b.dataset.p).classList.add("on");document.getElementById("hint").style.display="none";})});
+(function(){
+var views=document.querySelectorAll("#stepper .sv"),bars=document.querySelectorAll("#stepper .prog span"),i=0;
+var back=document.getElementById("sBack"),next=document.getElementById("sNext");
+function show(){views.forEach(function(v,k){v.classList.toggle("on",k===i)});bars.forEach(function(b,k){b.classList.toggle("done",k<=i)});
+back.disabled=i===0;next.textContent=i===views.length-1?"Start over":"Next";}
+back.addEventListener("click",function(){if(i>0){i--;show()}});
+next.addEventListener("click",function(){i=i===views.length-1?0:i+1;show()});
+show();
+})();
+</script>
+<div class="foot">11-25-2026 Art Malin - index.html</div>
+<script>
+document.querySelectorAll(".copy").forEach(function(box){
+  var b=document.createElement("button");b.type="button";b.textContent="Copy";box.appendChild(b);
+  b.addEventListener("click",function(){
+    var t=box.getAttribute("data-copy")||box.firstChild.textContent;
+    var done=function(){b.textContent="Copied";b.classList.add("ok");setTimeout(function(){b.textContent="Copy";b.classList.remove("ok")},1000)};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done)}
+    else{var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);done()}
+  });
+});
+</script>
+</body></html>

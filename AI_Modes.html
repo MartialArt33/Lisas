@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<!--
+STATUS: WORKING COPY
+VERSION: v7.6
+DATE: 11-24-2026
+
+You can add or update modes below.
+Start at "<!-- Seed Template Rules" and edit SeedData there.
+Create a new version when saving changes.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>
+    /*
+      03-25-2026
+      Author: Art Malin / ChatGPT
+      Root folder settings for the AI help pages.
+      Update CHEATSHEET_ROOT once if the folder moves.
+    */
+    window.CHEATSHEET_ROOT = "./";
+window.CHEATSHEET_FILE_URL = window.CHEATSHEET_ROOT + "AI_CheatSheet.html";
+window.HOME_URL = window.CHEATSHEET_ROOT + "index.html";
+window.CHEATSHEET_URL = window.CHEATSHEET_ROOT + "AI_CheatSheet.html";
+window.SEEDS_URL = window.CHEATSHEET_ROOT + "AI_Modes.html";
+window.SKILLS_URL = window.CHEATSHEET_ROOT + "AI_Skills.html";
+  </script>
+
+<title>AI Modes</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>"/>
+
+<!-- Script Header
+Created: 03-04-2026
+Author: Art Malin
+Description: Compact mode selector with short paste-in modes and copy-to-clipboard.
+-->
+<!-- Version History (append-only; newest first)
+11-25-2026 — v7.6 — Update Manuscript Editing for how Lisa works: change only what is asked and list other problems, American English by default, rewording awkward sentences in line edit, marked-up changes before finalizing, and drop the Americanize level; set Reference English to American unless the client specifies otherwise.
+11-24-2026 — v7.5 — Add Skills link to AI_Skills.html.
+11-24-2026 — v7.4 — Add Home link to index.html.
+11-24-2026 — v7.3 — Remove Skills and Behavior Guide links so the page stands alone with AI_CheatSheet.html.
+11-24-2026 — v7.2 — Add Manuscript Editing mode as a Best Bet.
+11-24-2026 — v7.1 — Rename Seeds to Modes (AI_Modes.html) and update page text, nav label, and copied header.
+11-24-2026 — v7.0 — Rename to AI_Seeds.html for general AI use: replace Dimpy with AI, seedling tab icon, remove footer logo and Reference Desk link, replace work Reference data with example data and a Build My Reference prompt, remove SharePoint Dev seed, and make Prompt Mode non-IT, and trim version history before 11-24-2026.
+
+-->
+<style>
+
+    :root {
+      --bg: #fdfefe;
+      --text: #1f1f1f;
+      --muted: #666;
+      --border: #e2e6ea;
+      --accent: #0078d4;
+      --font: "Segoe UI", Tahoma, Arial, sans-serif;
+      --mono: ui-monospace, Consolas, Menlo, monospace;
+      --fs: 11.5px;
+      --gap: 10px;
+      --shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      --narrow: "Arial Narrow", "Bahnschrift SemiCondensed", "Segoe UI Semibold", "Segoe UI", Tahoma, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      font-family: var(--font);
+      font-size: var(--fs);
+      color: var(--text);
+      line-height: 1.25;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    .wrap {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 12px;
+      padding-bottom: 24px;
+    }
+
+    .topbar {
+      flex: 0 0 auto;
+      justify-content: space-between;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 10px;
+      background: radial-gradient(900px 220px at 20% 0%, rgba(255, 255, 255, .16), rgba(255, 255, 255, 0) 60%), linear-gradient(180deg, #0c5fb0 0%, #083a6e 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, .18);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, .25);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 10px;
+    }
+
+    .topbar-left,
+    .header-leftwrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-left: auto;
+    }
+
+    .header-leftwrap { gap: 14px; }
+
+    .header-logo {
+      height: 34px;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .35));
+    }
+
+    .header-titlewrap {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .header-title {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+      letter-spacing: .2px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+    }
+
+    .header-desc {
+      margin-top: 2px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, .86);
+      font-weight: 500;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, .25);
+    }
+
+    .cheatsheet-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    .cheatsheet-topbar .topbar-main {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+    }
+
+    .topbar-links {
+      width: 100%;
+      font-size: 12px;
+      color: rgba(255, 255, 255, .92);
+      line-height: 1.2;
+    }
+
+    .topbar-links a {
+      color: rgba(255, 255, 255, .96);
+      text-decoration: none;
+    }
+
+    .topbar-links a:hover,
+    .topbar-links a:focus {
+      text-decoration: underline;
+    }
+
+    .topbar-links .sep {
+      color: rgba(255, 255, 255, .70);
+      padding: 0 6px;
+    }
+
+    .searchbox {
+      color: var(--text);
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 6px 8px;
+      width: 180px;
+      font-family: var(--narrow);
+      font-size: 11.5px;
+      line-height: 1.25;
+      font-weight: 500;
+      margin: auto;
+    }
+
+    .page-scroll {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+      padding-top: 10px;
+    }
+
+    .page {
+      padding: 4px 2px 0 2px;
+    }
+
+    .page section {
+      margin: 0 0 14px 0;
+    }
+
+    .page h2 {
+      margin: 0 0 6px 0;
+      font-size: 14px;
+      color: #0c5fb0;
+    }
+
+    .page p, .page li, .page td, .page th {
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .page p { margin: 0 0 8px 0; }
+    .page ul { margin: 0; padding-left: 18px; }
+    .page li { margin: 0 0 5px 0; }
+
+    .page table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    .page th, .page td {
+      padding: 7px 6px;
+      border-top: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .page tr:first-child th, .page tr:first-child td { border-top: none; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 12px;
+    }
+
+    .muted { color: var(--muted); }
+
+    .plain-block {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+    }
+
+    .seed-layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0,1fr);
+      gap: 18px;
+      align-items: start;
+      margin-top: 8px;
+    }
+
+    .seed-list {
+      background: #fff;
+      border: 1px solid rgba(226,232,240,0.9);
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+
+    .seed-link {
+      display: block;
+      padding: 6px 0;
+      color: inherit;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(226,232,240,0.9);
+    }
+
+    .seed-link:last-child { border-bottom: none; }
+    .seed-link.best-bet { background: linear-gradient(180deg, #f4f9ff 0%, #eaf3ff 100%); border-left: 5px solid var(--accent); padding-left: 8px; box-shadow: 0 2px 6px rgba(12, 95, 176, .12); }
+    .seed-link.active .seed-name { text-decoration: underline; }
+
+    .seed-name {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .best-bet-badge { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; margin-left: 8px; padding: 2px 8px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 10.5px; font-weight: 700; line-height: 1.2; white-space: nowrap; }
+
+    .seed-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .seed-preview {
+      position: relative;
+      background: #fde8e6;
+      border: 1px solid #f2c8c2;
+      border-radius: 8px;
+      padding: 10px 32px 10px 12px;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      font-size: 12px;
+      line-height: 1;
+      padding: 4px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: var(--mono);
+      opacity: .6;
+      color: #7a3939;
+    }
+
+    .copy-btn:hover,
+    .copy-btn:focus {
+      opacity: 1;
+      outline: none;
+    }
+
+    .copy-btn.copied {
+      color: #2f8f83;
+    }
+
+    pre, code {
+      margin:0;
+      font-family:var(--narrow);
+      font-size:12.5px;
+      white-space:pre-wrap;
+      word-break:break-word;
+      line-height:1.45;
+      color:#aa4a4a;
+    }
+
+    .ms-additional { color: maroon; }
+
+    footer.topbar { margin-top: 16px; }
+
+    [hidden] { display:none !important; }
+
+    @media (max-width: 900px) {
+      .seed-layout { grid-template-columns: 1fr; }
+    }
+
+</style>
+</head>
+<body>
+  <div class="wrap">
+    
+<div class="topbar cheatsheet-topbar">
+  <div class="topbar-main">
+    <div class="topbar-left">
+      <div class="header-leftwrap">
+        <div class="header-titlewrap">
+          <div class="header-title">AI Modes</div>
+          <div class="header-desc">Start focused task modes quickly without retyping setup prompts.</div>
+        </div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <input id="pageSearch" class="searchbox" type="search" placeholder="Search page..." />
+    </div>
+  </div>
+  <div class="topbar-links">
+<a href="#" id="navHome" target="_top" title="Start here: what each page is for and how to use it">Home</a>
+<span class="sep">|</span>
+<a href="#" id="navCheat" target="_top" title="Quick snippets to accomplish specific actions">Cheat Sheet</a>
+<span class="sep">|</span>
+<a href="#" id="navSeeds" target="_top" title="Bundled directive blocks you can paste at the start of a chat or any time the task changes">Modes</a>
+<span class="sep">|</span>
+<a href="#" id="navSkills" target="_top" title="Sample skill entries and what skills are for">Skills</a>
+</div>
+</div>
+
+    <div class="page-scroll">
+<div class="page">
+      <section data-search="modes seeds session starter task mode quick setup directive blocks lighter than skills quick reference">
+        <h2>Start a task mode fast</h2>
+        <p>Modes are short bundles of directives you can paste at the start of a chat or any time the task changes to switch the AI into a focused way of working. Cheat Sheet cards change one behavior; a mode sets several at once. Use them for working style, not full workflows. Keep them lighter than Skills so they stay fast to scan, easy to apply, and easy to replace.</p>
+      </section>
+
+      <div class="seed-layout">
+        <div class="seed-list" id="msSeedList"></div>
+        <div class="seed-preview">
+          <button type="button" id="msCopyBtn" class="copy-btn" aria-label="Copy current mode to clipboard" title="Copy current mode">🔗</button>
+          <pre><code id="msPreviewCode">Select a mode on the left.</code></pre>
+        </div>
+      </div>
+    </div>
+
+<!-- Seed Template Rules
+- Add or update seeds only in the SeedData JSON block.
+- Keep seeds short; they should start a session mode, not replace a skill.
+- Each seed must have a unique "title".
+- JSON bodies must escape line breaks using \n.
+- Avoid smart quotes; use plain ASCII quotes only.
+- Set "raw": true for a plain prompt that should copy without the seed directive header.
+- Prefer editing only seed title, description, or body; avoid modifying page logic or rendering code.
+-->
+<script type="application/json" id="SeedData">
+{
+  "seeds": [
+    {
+      "title": "Prompt Mode and Task Focus",
+      "description": "Use as the default chat setup for concise responses, command handling, and single-task focus.",
+      "body": "Use this response style and task focus for the entire chat.\n\nBe concise, direct, and practical. Treat me as a capable peer and skip the basics unless I ask. Lead with the answer or result, then explain only what matters.\n\nPrompts Only / Directives Only / Instructions Only: Return only paste-ready directions; do not execute them.\nGo / Proceed / Do it / Execute: Execute the most recent directions using the current context.\nThen execute: Write the directions first, then execute them.\n\nKeep one active task until I confirm it is complete. Prevent scope drift: park side items and return me to the current task. Do not switch, reorder, branch, or parallelize tasks without my confirmation.\n\nIf the request is unclear, an attachment appears to be missing, or the prompt appears incomplete, stop and ask for what is needed before continuing.",
+      "is_best_bet": true,
+      "hail_mary": true
+    },
+    {
+      "title": "Manuscript Editing",
+      "description": "Use when you want AI help editing part of a client's manuscript. Changes only what you ask and keeps the author's voice.",
+      "body": "Additional Setup\n- For paste-ready prompts or single-task focus, also include the Prompt Mode and Task Focus mode.\n\nScope\n- Change only what I ask. Leave everything else word for word unchanged.\n- Do not rewrite, smooth, tighten, or improve anything I did not ask about.\n- Preserve the author's voice, wording, structure, and formatting outside the requested change.\n- If you spot other problems, list them. Do not fix them unless I say so.\n\nLanguage\n- Use American English unless I name another variety (UK, Canadian, Australian).\n\nEdit Level\n- Use only the level I name:\n  Proofread: spelling, grammar, punctuation.\n  Line edit: clarity and flow within sentences, including rewording awkward sentences, without changing meaning.\n  Developmental: comments only, no rewriting.\n- If I did not name a level, ask.\n\nShowing Changes\n- When I give you text to rewrite or correct, return a marked-up version first: deletions ~~struck through~~, additions in **bold**, then a short numbered list of the changes.\n- Finalize only after I approve, and include only the approved changes.\n- When I give you a file, return the full file and list exactly what changed.\n\nLayout\n- Do not change headings, styles, page breaks, image or diagram placeholders, captions, or cross-references unless I ask.\n- Flag any change that could affect layout or text flow, such as a noticeable change in length.\n\nAsk For\n- If the text, edit level, or file is missing or unclear, stop and ask.",
+      "is_best_bet": true
+    },
+    {
+      "title": "Reference",
+      "description": "Example names, terms, style rules, and links. Replace with your own using Build My Reference.",
+      "body": "Note\n- These are examples. Replace them with the names, terms, and links you use most. Use the Build My Reference prompt to have the AI do it for you.\n\nTerms and Synonyms\n- MS = manuscript.\n- Ch = chapter.\n- WIP = work in progress.\n- Draft and version are synonymous unless specified.\n\nPeople and Places\n- Main character: [Name], [age], lives in [town].\n- [Name] spelling is always [exact spelling].\n- Setting: [town or region], [year or era].\n\nStyle\n- English: American unless the client specifies otherwise.\n- Chicago Manual of Style.\n- Use the serial comma.\n- Numbers one through one hundred are spelled out.\n\nLinks\n- Manuscript folder: [OneDrive or Google Drive link]\n- Style guide: https://www.chicagomanualofstyle.org",
+      "is_best_bet": true,
+      "hail_mary": true
+    },
+    {
+      "title": "Build My Reference",
+      "description": "Prompt to have the AI fill in the Reference mode with your own items and update this page.",
+      "raw": true,
+      "body": "Help me build the Reference mode on my AI Modes page.\n\nAsk me one group at a time for the names, terms, abbreviations, spellings, style rules, and links I use most. If you have memory of me or access to my past chats, suggest items from them and let me confirm each one.\n\nUse the same headings as the example Reference mode: Terms and Synonyms, People and Places, Style, Links.\n\nWhen I say done, update the Reference mode in the attached AI_Modes.html with the confirmed items. Change only the Reference mode body and description. Keep the JSON valid: escape line breaks as \\n and use plain straight quotes.\n\nReturn the full updated page as a downloadable file. If AI_Modes.html is not attached, ask me for it before starting."
+    },
+    {
+      "title": "Response Cleanup Guardrails",
+      "description": "Use with task focus when you want extra protection against missing inputs, bloat, and unnecessary changes.",
+      "body": "Use this with Prompt Mode and Task Focus when the chat needs stricter cleanup behavior.\n\nKeep responses moving toward the next decision or action.\nDo not add unnecessary changes.\nAvoid vague, fluffy, or repetitive wording.\n\nIf it looks like I forgot an attachment, file, or text needed for the request, stop and confirm before continuing.\n\nBefore executing instructions, do a final compliance pass against the current request and approved scope."
+    },
+    {
+      "title": "Scripting",
+      "description": "Use for scripting and artifact work with tight scope control.",
+      "body": "Priorities\n- Stay inside the requested scope.\n- Treat the most recent provided file as authoritative.\n- Do not add unrelated cleanup, refactoring, redesign, or helpful extras.\n- Keep output concise, practical, and ready to use.\n\nWhen Relevant\n- Use the appropriate skill for detailed standards, versioning, file handling, or format-specific rules.\n- Prefer the simplest working solution first.\n- Call out assumptions briefly if required.\n\nDefault Behavior\n- Make only the requested change.\n- Preserve existing structure and conventions unless told otherwise.\n- If editing a file, return the full updated file unless told otherwise."
+    },
+    {
+      "title": "Tech Support",
+      "description": "Use for technical troubleshooting and diagnosis.",
+      "body": "Additional Setup\n- If troubleshooting requires editing scripts or files, also include the Scripting mode.\n\nPriorities\n- Isolate the fault fast.\n- Separate facts from guesses.\n- Avoid generic troubleshooting lists.\n- Prefer the shortest practical path to narrow the problem.\n\nDefault Behavior\n- Do not repeat steps already tried unless there is a reason.\n- Prefer low-risk, non-destructive checks first.\n- State likely cause, possible cause, and uncertainty clearly.\n- End with the single best next action.\n\nAsk For\n- Request only the next blocking detail if it materially changes the diagnosis."
+    },
+    {
+      "title": "Drift Reset",
+      "description": "Use when the thread drifted and needs a clean reset.",
+      "body": "Priorities\n- Drop accumulated assumptions that are not clearly supported.\n- Re-center on the current request and approved scope.\n- Prefer the simplest direct path forward.\n\nDefault Behavior\n- Briefly restate the task, constraints, and next action.\n- Ignore stale side quests unless they still matter.\n- Do not expand the scope while recovering."
+    }
+  ]
+}
+</script>
+
+    
+<footer class="topbar">
+      <div class="topbar-left">
+        <div class="header-leftwrap">
+          <div class="header-desc">11-25-2026 Art Malin - update Manuscript Editing mode.</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="header-desc">AI_Modes.html</div>
+      </div>
+    </footer>
+
+  </div>
+  </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var SEEDS = JSON.parse(document.getElementById("SeedData").textContent).seeds;
+  var currentSeed = null;
+  var active = 0;
+  var listEl = document.getElementById("msSeedList");
+  var preview = document.getElementById("msPreviewCode");
+  var copyBtn = document.getElementById("msCopyBtn");
+  var pageSearch = document.getElementById("pageSearch");
+
+  function BuildSeedOutput(seed) {
+    if (seed && seed.raw) return seed.body || "";
+    var header =
+      "Mode: " + (seed && seed.title ? seed.title : "") + "\n\n" +
+      "Directive\n" +
+      "Apply the rules in this mode immediately for the remainder of the task unless explicitly overridden.\n" +
+      "Treat the rules below as operational constraints, not suggestions.\n\n";
+    return header + (seed && seed.body ? seed.body : "");
+  }
+
+  function CopyTextToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = String(text || "");
+        ta.setAttribute("readonly", "");
+        ta.style.position = "absolute";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  function formatBody(body) {
+    var html = escapeHtml(body || "");
+    html = html.replace(/(^|\n)(Additional Setup\n[\s\S]*?)(\n\n|$)/, function(_, p1, block, p3) {
+      return p1 + '<span class="ms-additional">' + block + "</span>" + p3;
+    });
+    return html;
+  }
+
+  function render(seedList) {
+    listEl.innerHTML = "";
+
+    if (!seedList.length) {
+      currentSeed = null;
+      preview.textContent = "No modes available.";
+      return;
+    }
+
+    if (active >= seedList.length) active = 0;
+
+    seedList.forEach(function (s, i) {
+      var item = document.createElement("div");
+      item.className = "seed-link" + (s.is_best_bet ? " best-bet" : "") + (i === active ? " active" : "");
+      item.innerHTML =
+        '<div class="seed-name"><span>' + escapeHtml(s.title) + '</span>' + (s.is_best_bet ? '<span class="best-bet-badge">Best Bet</span>' : '') + '</div>' +
+        '<div class="seed-desc">' + (s.description || "") + "</div>";
+
+      item.addEventListener("click", function () {
+        active = i;
+        currentSeed = s;
+        preview.innerHTML = formatBody(BuildSeedOutput(s));
+        render(seedList);
+      });
+
+      listEl.appendChild(item);
+    });
+
+    currentSeed = seedList[active];
+    preview.innerHTML = formatBody(BuildSeedOutput(currentSeed));
+  }
+
+  var visibleSeeds = SEEDS.slice();
+  render(visibleSeeds);
+
+  copyBtn.addEventListener("click", function () {
+    if (!currentSeed) return;
+    CopyTextToClipboard(BuildSeedOutput(currentSeed)).then(function () {
+      copyBtn.classList.add("copied");
+      copyBtn.textContent = "✓";
+      setTimeout(function () {
+        copyBtn.classList.remove("copied");
+        copyBtn.textContent = "🔗";
+      }, 900);
+    }).catch(function () { });
+  });
+
+  if (pageSearch) {
+    pageSearch.addEventListener("input", function () {
+      var q = (pageSearch.value || "").trim().toLowerCase();
+      if (!q) {
+        visibleSeeds = SEEDS.slice();
+      } else {
+        visibleSeeds = SEEDS.filter(function (s) {
+          var hay = (s.title + " " + (s.description || "") + " " + (s.body || "")).toLowerCase();
+          return hay.indexOf(q) !== -1;
+        });
+      }
+      active = 0;
+      render(visibleSeeds);
+      if (visibleSeeds.length === 0) {
+        preview.textContent = "No matching modes.";
+      }
+    });
+  }
+});
+</script>
+
+<script>
+    /*
+      03-31-2026
+      Author: Art Malin / ChatGPT
+      Wire the top navigation links from the configured page URLs.
+    */
+    document.addEventListener("DOMContentLoaded", function () {
+      var map = {
+        navHome: window.HOME_URL,
+        navCheat: window.CHEATSHEET_URL,
+        navSeeds: window.SEEDS_URL,
+        navSkills: window.SKILLS_URL,
+      };
+      Object.keys(map).forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.href = map[id];
+      });
+    });
+  </script>
+
+</body>
+</html>
